@@ -1,6 +1,7 @@
 const { sequelize } = require("./sequelize");
 
 const { User } = require("../Models/user");
+const { Session } = require("../Models/session");
 
 const asyncTables = async () => {
   try {

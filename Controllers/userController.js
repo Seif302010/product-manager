@@ -1,6 +1,8 @@
 const { User } = require("../Models/user");
+const { Session } = require("../Models/session");
 const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
+const { v4: uuidv4 } = require("uuid");
 
 const noDoublications = async (user) => {
   messages = {};
@@ -36,7 +38,14 @@ const signUp = async (req, res) => {
       return res.status(400).json(errorMessages);
     }
     data.password = await bcrypt.hash(data.password, 10);
-    const user = await User.create(data);
+    let user = await User.create(data);
+
+    const session = await Session.create({
+      userId: user.id,
+    });
+    user = user.get({ plain: true });
+    delete user.password
+    user.token = session.token;
     return res.status(201).json(user);
   } catch (error) {
     return res
