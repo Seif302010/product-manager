@@ -1,22 +1,35 @@
 const { User } = require("../Models/user");
 
-const validateUser = async (req, res, next) => {
-  try {
-    if (req.body.phone === "") {
-      req.body.phone = undefined;
+const globalValidator = async (Model , data) =>{
+  const errorMessages = {}
+  for (const key in data) {
+    if (data[key] === "") {
+      data[key] = undefined;
     }
-    const user = User.build(req.body);
-    await user.validate();
-    next();
+  }
+  try {
+    const model = Model.build(data);
+    await model.validate();
   } catch (error) {
-    const errorMessages = {};
     error.errors.forEach((err) => {
       if (!errorMessages[err.path]) {
         errorMessages[err.path] = err.message;
       }
     });
-    return res.status(400).json(errorMessages);
   }
+  return errorMessages;
 };
 
-module.exports = { validateUser };
+// Model is the sequelize model you want to validate
+const validateModel = (Model) => {
+  return async (req, res, next) => {
+    const errorMessages = await globalValidator(Model, req.body);
+    if (Object.keys(errorMessages).length === 0) {
+      next();
+    } else {
+      return res.status(400).json(errorMessages);
+    }
+  };
+};
+
+module.exports = { validateModel };

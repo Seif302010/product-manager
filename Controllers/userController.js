@@ -2,7 +2,6 @@ const { User } = require("../Models/user");
 const { Session } = require("../Models/session");
 const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
-const { v4: uuidv4 } = require("uuid");
 
 const noDoublications = async (user) => {
   messages = {};
@@ -33,6 +32,9 @@ const noDoublications = async (user) => {
 const signUp = async (req, res) => {
   try {
     const data = req.body;
+    if (data.phone === "") {
+      data.phone = undefined;
+    }
     errorMessages = await noDoublications(data);
     if (Object.keys(errorMessages).length > 0) {
       return res.status(400).json(errorMessages);
