@@ -2,7 +2,7 @@ const { User } = require("../Models/user");
 
 const validateUser = async (req, res, next) => {
   try {
-    if (req.body.phone === "" || req.body.phone === undefined) {
+    if (req.body.phone === "") {
       req.body.phone = undefined;
     }
     const user = User.build(req.body);
