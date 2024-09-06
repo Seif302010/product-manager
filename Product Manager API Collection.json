@@ -1,0 +1,54 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "Product Manager",
+    "collectionId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
+    "dateExported": "2024-08-09T03:46:58.373Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "8be0223b-9ff8-45ab-a45a-ba61cedcfd5e",
+            "name": "User",
+            "containerId": "",
+            "created": "2024-08-09T03:44:31.378Z",
+            "sortNum": 10000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "6d61832f-c285-46c3-9500-651a989d4e7c",
+            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
+            "containerId": "8be0223b-9ff8-45ab-a45a-ba61cedcfd5e",
+            "name": "Sign Up",
+            "url": "http://localhost:5000/signUp",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-08-09T03:44:01.046Z",
+            "modified": "2024-08-09T03:46:48.834Z",
+            "headers": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "test"
+                    },
+                    {
+                        "name": "email",
+                        "value": "test@gmail.com"
+                    },
+                    {
+                        "name": "password",
+                        "value": "12345678"
+                    },
+                    {
+                        "name": "phone",
+                        "value": "",
+                        "isDisabled": true
+                    }
+                ]
+            }
+        }
+    ],
+    "ref": "wVR9lAFd2YIX8bLxAn8-AU6Q8yG4zwQYYJcc638gjITYy1kMRBJeBU3b9gkEXckO5Xzw93eYEynkHQlFiuZOyA"
+}

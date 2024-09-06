@@ -1,0 +1,9 @@
+# Node
+node_modules
+.env
+
+# Files
+*.jpg
+*.jpeg
+*.png
+*.webp
