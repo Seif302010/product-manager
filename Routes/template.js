@@ -1,13 +1,16 @@
 const router_template = (
   router,
-  get_req = null,
-  post_req = null,
-  put_req = null,
-  delete_req = null
+  get = { request: null, middlewares: [] },
+  post = { request: null, middlewares: [] },
+  put = { request: null, middlewares: [] },
+  del = { request: null, middlewares: [] }
 ) => {
-  if (get_req != null) router.get("/", get_req);
-  if (post_req != null) router.post("/", post_req);
-  if (put_req != null) router.put("/", put_req);
-  if (delete_req != null) router.delete("/", delete_req);
+  if (get.request) router.get("/", [...(get.middlewares || [])], get.request);
+  if (post.request)
+    router.post("/", [...(post.middlewares || [])], post.request);
+  if (put.request) router.put("/", [...(put.middlewares || [])], put.request);
+  if (del.request)
+    router.delete("/", [...(del.middlewares || [])], del.request);
 };
+
 module.exports = { router_template };

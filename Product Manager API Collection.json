@@ -2,7 +2,7 @@
     "clientName": "Thunder Client",
     "collectionName": "Product Manager",
     "collectionId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
-    "dateExported": "2024-08-09T03:46:58.373Z",
+    "dateExported": "2024-09-09T13:36:30.588Z",
     "version": "1.2",
     "folders": [
         {
@@ -11,6 +11,13 @@
             "containerId": "",
             "created": "2024-08-09T03:44:31.378Z",
             "sortNum": 10000
+        },
+        {
+            "_id": "318bc515-ddfb-4285-8cb4-cdb04a930745",
+            "name": "Product",
+            "containerId": "",
+            "created": "2024-09-09T13:20:52.612Z",
+            "sortNum": 20000
         }
     ],
     "requests": [
@@ -19,11 +26,11 @@
             "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
             "containerId": "8be0223b-9ff8-45ab-a45a-ba61cedcfd5e",
             "name": "Sign Up",
-            "url": "http://localhost:5000/signUp",
+            "url": "http://localhost:5000/user/signUp",
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-08-09T03:44:01.046Z",
-            "modified": "2024-08-09T03:46:48.834Z",
+            "modified": "2024-09-09T13:34:03.068Z",
             "headers": [],
             "body": {
                 "type": "formencoded",
@@ -43,12 +50,71 @@
                     },
                     {
                         "name": "phone",
-                        "value": "",
-                        "isDisabled": true
+                        "value": ""
                     }
                 ]
             }
+        },
+        {
+            "_id": "4e5db8d5-673b-46b6-b6b3-4498e3d558ee",
+            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
+            "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
+            "name": "GetAll",
+            "url": "http://localhost:5000/product/",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-09-09T13:21:02.795Z",
+            "modified": "2024-09-09T13:34:28.431Z",
+            "headers": []
+        },
+        {
+            "_id": "36bface0-9304-48f3-8810-a5ed8164de01",
+            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
+            "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
+            "name": "GetSearch",
+            "url": "http://localhost:5000/product/search",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-09-09T13:21:09.556Z",
+            "modified": "2024-09-09T13:31:54.637Z",
+            "headers": []
+        },
+        {
+            "_id": "038757ac-4d43-4cc4-8377-70a4b9b79bc7",
+            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
+            "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
+            "name": "Delete",
+            "url": "http://localhost:5000/product",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2024-09-09T13:21:27.836Z",
+            "modified": "2024-09-09T13:35:26.389Z",
+            "headers": []
+        },
+        {
+            "_id": "1c3c05ab-72a5-4057-bf34-3753977d5806",
+            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
+            "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
+            "name": "Put",
+            "url": "http://localhost:5000/product",
+            "method": "PUT",
+            "sortNum": 40000,
+            "created": "2024-09-09T13:21:29.475Z",
+            "modified": "2024-09-09T13:35:22.188Z",
+            "headers": []
+        },
+        {
+            "_id": "c84cb932-dad7-421a-a7e0-211ba3afe906",
+            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
+            "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
+            "name": "Post",
+            "url": "http://localhost:5000/product",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-09-09T13:21:31.035Z",
+            "modified": "2024-09-09T13:35:17.257Z",
+            "headers": []
         }
     ],
-    "ref": "wVR9lAFd2YIX8bLxAn8-AU6Q8yG4zwQYYJcc638gjITYy1kMRBJeBU3b9gkEXckO5Xzw93eYEynkHQlFiuZOyA"
+    "ref": "wVR9lAFd2YIX8bLxAn8-ATUQ3vH5aeCh_W-Zc8th9hvwLjDjNIJ1SyhWSG4PS4QL-B0TUYh26CcK17tHepoGHA"
 }
