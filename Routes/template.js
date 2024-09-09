@@ -1,16 +1,16 @@
-const router_template = (
-  router,
-  get = { request: null, middlewares: [] },
-  post = { request: null, middlewares: [] },
-  put = { request: null, middlewares: [] },
-  del = { request: null, middlewares: [] }
-) => {
-  if (get.request) router.get("/", [...(get.middlewares || [])], get.request);
-  if (post.request)
-    router.post("/", [...(post.middlewares || [])], post.request);
-  if (put.request) router.put("/", [...(put.middlewares || [])], put.request);
-  if (del.request)
-    router.delete("/", [...(del.middlewares || [])], del.request);
+const registerRoutes = (router, method, routes) => {
+  routes.forEach(({ path = "/", request = null, middlewares = [] }) => {
+    if (request) {
+      router[method](`${path}`, [...middlewares], request);
+    }
+  });
+};
+
+const router_template = (router, get = [], post = [], put = [], del = []) => {
+  registerRoutes(router, "get", get);
+  registerRoutes(router, "post", post);
+  registerRoutes(router, "put", put);
+  registerRoutes(router, "delete", del);
 };
 
 module.exports = { router_template };
