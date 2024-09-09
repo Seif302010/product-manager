@@ -6,12 +6,10 @@ const { router_template } = require("./template");
 const { Product } = require("../Models/product");
 
 //  كتيرة يساعدنا يسهل الموضوع هو شغال بس لسا بشوف هو هيفيدنا ولا لا  requests  فيها APIs كنت عامله عشان لو هنعمل template ده
+// انا عاملها عشان لاقيت نفسي بكرر اكواد  GlobalFunctions  هتلاقي حاجات زي كده في
 router_template(
   router,
-  [
-    { request: productController.getAll },
-    { request: productController.getSearch, path: "/search" },
-  ],
+  [{ request: productController.get }],
   [
     {
       request: productController.post,

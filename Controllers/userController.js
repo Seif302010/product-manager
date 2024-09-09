@@ -1,18 +1,17 @@
 const { User } = require("../Models/user");
 const { Session } = require("../Models/session");
 const { Op } = require("sequelize");
+const dbFunctions = require("../GlobalFunctions/modelsFunctions");
 const bcrypt = require("bcrypt");
 
 const noDoublications = async (user) => {
   messages = {};
-  const existingUsers = await User.findAll({
-    where: {
-      [Op.or]: [
-        { name: user.name },
-        { email: user.email },
-        ...(user.phone !== undefined ? [{ phone: user.phone }] : []),
-      ],
-    },
+  const existingUsers = await dbFunctions(User).get({
+    [Op.or]: [
+      { name: user.name },
+      { email: user.email },
+      ...(user.phone !== undefined ? [{ phone: user.phone }] : []),
+    ],
   });
 
   if (existingUsers.length > 0) {
@@ -40,13 +39,13 @@ const signUp = async (req, res) => {
       return res.status(400).json(errorMessages);
     }
     data.password = await bcrypt.hash(data.password, 10);
-    let user = await User.create(data);
+    let user = await dbFunctions(User).create(data);
 
-    const session = await Session.create({
+    const session = await dbFunctions(Session).create({
       userId: user.id,
     });
     user = user.get({ plain: true });
-    delete user.password
+    delete user.password;
     user.token = session.token;
     return res.status(201).json(user);
   } catch (error) {

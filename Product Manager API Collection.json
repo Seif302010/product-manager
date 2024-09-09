@@ -2,7 +2,7 @@
     "clientName": "Thunder Client",
     "collectionName": "Product Manager",
     "collectionId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
-    "dateExported": "2024-09-09T13:36:30.588Z",
+    "dateExported": "2024-09-09T19:16:10.918Z",
     "version": "1.2",
     "folders": [
         {
@@ -30,7 +30,7 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-08-09T03:44:01.046Z",
-            "modified": "2024-09-09T13:34:03.068Z",
+            "modified": "2024-09-09T18:18:11.597Z",
             "headers": [],
             "body": {
                 "type": "formencoded",
@@ -59,25 +59,37 @@
             "_id": "4e5db8d5-673b-46b6-b6b3-4498e3d558ee",
             "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
             "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
-            "name": "GetAll",
+            "name": "Get",
             "url": "http://localhost:5000/product/",
             "method": "GET",
             "sortNum": 20000,
             "created": "2024-09-09T13:21:02.795Z",
-            "modified": "2024-09-09T13:34:28.431Z",
-            "headers": []
-        },
-        {
-            "_id": "36bface0-9304-48f3-8810-a5ed8164de01",
-            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
-            "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
-            "name": "GetSearch",
-            "url": "http://localhost:5000/product/search",
-            "method": "GET",
-            "sortNum": 30000,
-            "created": "2024-09-09T13:21:09.556Z",
-            "modified": "2024-09-09T13:31:54.637Z",
-            "headers": []
+            "modified": "2024-09-09T19:15:46.513Z",
+            "headers": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "id",
+                        "value": "1",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "name",
+                        "value": "iphone",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "rating",
+                        "value": "3.5"
+                    },
+                    {
+                        "name": "price",
+                        "value": "10000.75"
+                    }
+                ]
+            }
         },
         {
             "_id": "038757ac-4d43-4cc4-8377-70a4b9b79bc7",
@@ -88,8 +100,18 @@
             "method": "DELETE",
             "sortNum": 40000,
             "created": "2024-09-09T13:21:27.836Z",
-            "modified": "2024-09-09T13:35:26.389Z",
-            "headers": []
+            "modified": "2024-09-09T17:09:18.539Z",
+            "headers": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "id",
+                        "value": "1"
+                    }
+                ]
+            }
         },
         {
             "_id": "1c3c05ab-72a5-4057-bf34-3753977d5806",
@@ -100,8 +122,30 @@
             "method": "PUT",
             "sortNum": 40000,
             "created": "2024-09-09T13:21:29.475Z",
-            "modified": "2024-09-09T13:35:22.188Z",
-            "headers": []
+            "modified": "2024-09-09T19:14:16.383Z",
+            "headers": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "id",
+                        "value": "1"
+                    },
+                    {
+                        "name": "name",
+                        "value": "iphone 7"
+                    },
+                    {
+                        "name": "price",
+                        "value": ""
+                    },
+                    {
+                        "name": "rating",
+                        "value": ""
+                    }
+                ]
+            }
         },
         {
             "_id": "c84cb932-dad7-421a-a7e0-211ba3afe906",
@@ -112,9 +156,31 @@
             "method": "POST",
             "sortNum": 40000,
             "created": "2024-09-09T13:21:31.035Z",
-            "modified": "2024-09-09T13:35:17.257Z",
-            "headers": []
+            "modified": "2024-09-09T19:00:14.568Z",
+            "headers": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "iphone 89"
+                    },
+                    {
+                        "name": "price",
+                        "value": "10000.75"
+                    },
+                    {
+                        "name": "rating",
+                        "value": "3.5"
+                    },
+                    {
+                        "name": "ttt",
+                        "value": "www"
+                    }
+                ]
+            }
         }
     ],
-    "ref": "wVR9lAFd2YIX8bLxAn8-ATUQ3vH5aeCh_W-Zc8th9hvwLjDjNIJ1SyhWSG4PS4QL-B0TUYh26CcK17tHepoGHA"
+    "ref": "wVR9lAFd2YIX8bLxAn8-AXQiPKpFEa8h6RIPO_h6H9OtdPCOpw-DQuyW8s6FpvzIS-5CyIZMFwHOE0juaaaJJw"
 }
