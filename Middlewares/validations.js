@@ -1,4 +1,3 @@
-const { User } = require("../Models/user");
 const {
   filterByDeletingEmpty,
 } = require("../GlobalFunctions/objectsFunctions");

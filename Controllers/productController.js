@@ -20,8 +20,6 @@ const serverError = (res, error) => {
     .json({ message: `Internal Server Error: ${error.message}` });
 };
 
-const todo = "not implemented yet";
-
 const get = async (req, res) => {
   try {
     const data = req.body;

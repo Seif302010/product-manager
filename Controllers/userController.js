@@ -55,4 +55,31 @@ const signUp = async (req, res) => {
   }
 };
 
-module.exports = { signUp };
+const logIn = async (req, res, next) => {
+  try {
+    let user = await User.findOne({
+      where: { email: req.body.email },
+    });
+
+    if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
+      return res.status(404).json("Incorrect Email or Password");
+      // return next(new Error("Incorrect Email or Password"));
+    }
+
+    const session = await dbFunctions(Session).create({
+      userId: user.id,
+    });
+
+    user = user.get({ plain: true });
+    delete user.password;
+    user.token = session.token;
+
+    // Respond with success message and token
+    res.status(200).json(user);
+  } catch (error) {
+    // Handle errors
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { signUp, logIn };
