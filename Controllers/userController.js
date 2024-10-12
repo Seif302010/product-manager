@@ -14,15 +14,9 @@ const noDoublications = async (user) => {
       ...(user.phone !== undefined ? [{ phone: user.phone }] : []),
     ],
   });
-  for (const i in existingUsers) {
-    let existingUser = existingUsers[i].dataValues;
-    for (const key in existingUser) {
-      if (existingUser[key] === user[key]) {
-        messages[key] = `${key} already registered`;
-      }
-    }
-    if (Object.keys(messages).length === Object.keys(user).length) {
-      break;
+  for (const key in user) {
+    if (existingUsers.find((u) => u[key] === user[key])) {
+      messages[key] = `${key} already registered`;
     }
   }
   return messages;
