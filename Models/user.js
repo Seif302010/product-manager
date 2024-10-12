@@ -48,6 +48,12 @@ const User = sequelize.define("user", {
       },
     },
   },
+  role: {
+    type: DataTypes.STRING,
+    enum: ["admin", "user"],
+    defaultValue: "user",
+    allowNull: false,
+  },
   phone: {
     type: DataTypes.STRING,
     allowNull: true,
@@ -57,9 +63,6 @@ const User = sequelize.define("user", {
         msg: "Phone number must be between 10 and 20 characters long.",
       },
     },
-  },
-  address: {
-    type: DataTypes.STRING,
   },
 });
 

@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { asyncTables } = require("./DataBase/dbManager");
 const userRoute = require("./Routes/userRoute");
+const productRoute = require("./Routes/productRoute");
 
 require("dotenv").config();
 
@@ -12,7 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use("/", userRoute);
+app.use("/user", userRoute);
+app.use("/product", productRoute);
 
 (async () => {
   try {

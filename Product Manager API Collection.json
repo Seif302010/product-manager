@@ -2,7 +2,7 @@
     "clientName": "Thunder Client",
     "collectionName": "Product Manager",
     "collectionId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
-    "dateExported": "2024-08-09T03:46:58.373Z",
+    "dateExported": "2024-10-12T16:22:59.688Z",
     "version": "1.2",
     "folders": [
         {
@@ -11,6 +11,13 @@
             "containerId": "",
             "created": "2024-08-09T03:44:31.378Z",
             "sortNum": 10000
+        },
+        {
+            "_id": "318bc515-ddfb-4285-8cb4-cdb04a930745",
+            "name": "Product",
+            "containerId": "",
+            "created": "2024-09-09T13:20:52.612Z",
+            "sortNum": 20000
         }
     ],
     "requests": [
@@ -19,11 +26,11 @@
             "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
             "containerId": "8be0223b-9ff8-45ab-a45a-ba61cedcfd5e",
             "name": "Sign Up",
-            "url": "http://localhost:5000/signUp",
+            "url": "http://localhost:5000/user/signUp",
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-08-09T03:44:01.046Z",
-            "modified": "2024-08-09T03:46:48.834Z",
+            "modified": "2024-10-12T15:27:38.230Z",
             "headers": [],
             "body": {
                 "type": "formencoded",
@@ -48,7 +55,167 @@
                     }
                 ]
             }
+        },
+        {
+            "_id": "4e5db8d5-673b-46b6-b6b3-4498e3d558ee",
+            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
+            "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
+            "name": "Get",
+            "url": "http://localhost:5000/product/",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-09-09T13:21:02.795Z",
+            "modified": "2024-09-09T19:53:34.520Z",
+            "headers": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "id",
+                        "value": "1",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "name",
+                        "value": "9",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "rating",
+                        "value": "3.5",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "price",
+                        "value": "10000.75",
+                        "isDisabled": true
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "120256a8-58da-4abe-ae12-947f4e860247",
+            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
+            "containerId": "8be0223b-9ff8-45ab-a45a-ba61cedcfd5e",
+            "name": "Log In",
+            "url": "http://localhost:5000/user/logIn",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-10-12T14:33:36.971Z",
+            "modified": "2024-10-12T16:10:24.887Z",
+            "headers": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "test",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "email",
+                        "value": "test@gmail.com"
+                    },
+                    {
+                        "name": "password",
+                        "value": "12345678"
+                    },
+                    {
+                        "name": "phone",
+                        "value": "",
+                        "isDisabled": true
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "c84cb932-dad7-421a-a7e0-211ba3afe906",
+            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
+            "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
+            "name": "Post",
+            "url": "http://localhost:5000/product",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-09-09T13:21:31.035Z",
+            "modified": "2024-09-09T19:16:22.265Z",
+            "headers": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "iphone 89"
+                    },
+                    {
+                        "name": "price",
+                        "value": "10000.75"
+                    },
+                    {
+                        "name": "rating",
+                        "value": "3.5"
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "1c3c05ab-72a5-4057-bf34-3753977d5806",
+            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
+            "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
+            "name": "Put",
+            "url": "http://localhost:5000/product",
+            "method": "PUT",
+            "sortNum": 35000,
+            "created": "2024-09-09T13:21:29.475Z",
+            "modified": "2024-09-09T20:14:47.065Z",
+            "headers": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "id",
+                        "value": "1"
+                    },
+                    {
+                        "name": "name",
+                        "value": "iphone 5"
+                    },
+                    {
+                        "name": "price",
+                        "value": ""
+                    },
+                    {
+                        "name": "rating",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "038757ac-4d43-4cc4-8377-70a4b9b79bc7",
+            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
+            "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
+            "name": "Delete",
+            "url": "http://localhost:5000/product",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2024-09-09T13:21:27.836Z",
+            "modified": "2024-09-09T17:09:18.539Z",
+            "headers": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "id",
+                        "value": "1"
+                    }
+                ]
+            }
         }
     ],
-    "ref": "wVR9lAFd2YIX8bLxAn8-AU6Q8yG4zwQYYJcc638gjITYy1kMRBJeBU3b9gkEXckO5Xzw93eYEynkHQlFiuZOyA"
+    "ref": "wVR9lAFd2YIX8bLxAn8-AeEP_xiHPGFYIM38EWndCp7NCTZ0-7APUHdDsADBtyB6Y6hI1pKNPRus0t2TH3WnLg"
 }

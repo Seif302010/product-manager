@@ -1,12 +1,10 @@
-const { User } = require("../Models/user");
+const {
+  filterByDeletingEmpty,
+} = require("../GlobalFunctions/objectsFunctions");
 
-const globalValidator = async (Model , data) =>{
-  const errorMessages = {}
-  for (const key in data) {
-    if (data[key] === "") {
-      data[key] = undefined;
-    }
-  }
+const globalValidator = async (Model, data) => {
+  const errorMessages = {};
+  filterByDeletingEmpty(data);
   try {
     const model = Model.build(data);
     await model.validate();
