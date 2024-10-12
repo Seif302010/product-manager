@@ -2,27 +2,27 @@ const { User } = require("../Models/user");
 const { Session } = require("../Models/session");
 const { Op } = require("sequelize");
 const dbFunctions = require("../GlobalFunctions/modelsFunctions");
+const objFunctions = require("../GlobalFunctions/objectsFunctions");
 const bcrypt = require("bcrypt");
 
 const noDoublications = async (user) => {
-  messages = {};
-  const existingUsers = await dbFunctions(User).get({
+  let messages = {};
+  let existingUsers = await dbFunctions(User).get({
     [Op.or]: [
       { name: user.name },
       { email: user.email },
       ...(user.phone !== undefined ? [{ phone: user.phone }] : []),
     ],
   });
-
-  if (existingUsers.length > 0) {
-    if (existingUsers.find((u) => u.name === user.name)) {
-      messages.name = "name already taken";
+  for (const i in existingUsers) {
+    let existingUser = existingUsers[i].dataValues;
+    for (const key in existingUser) {
+      if (existingUser[key] === user[key]) {
+        messages[key] = `${key} already registered`;
+      }
     }
-    if (existingUsers.find((u) => u.email === user.email)) {
-      messages.email = "email already registered";
-    }
-    if (existingUsers.find((u) => u.phone === user.phone)) {
-      messages.phone = "phone already registered";
+    if (Object.keys(messages).length === Object.keys(user).length) {
+      break;
     }
   }
   return messages;
@@ -34,7 +34,9 @@ const signUp = async (req, res) => {
     if (data.phone === "") {
       data.phone = undefined;
     }
-    errorMessages = await noDoublications(data);
+    errorMessages = await noDoublications(
+      objFunctions.filterByAttributes(data, ["name", "email", "phone"])
+    );
     if (Object.keys(errorMessages).length > 0) {
       return res.status(400).json(errorMessages);
     }
