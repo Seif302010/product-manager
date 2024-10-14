@@ -51,7 +51,7 @@ const signUp = async (req, res) => {
   }
 };
 
-const logIn = async (req, res, next) => {
+const logIn = async (req, res) => {
   try {
     let user = await User.findOne({
       where: { email: req.body.email },
@@ -59,7 +59,6 @@ const logIn = async (req, res, next) => {
 
     if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
       return res.status(404).json("Incorrect Email or Password");
-      // return next(new Error("Incorrect Email or Password"));
     }
 
     const session = await dbFunctions(Session).create({
