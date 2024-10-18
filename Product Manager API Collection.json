@@ -1,221 +1,210 @@
 {
-    "clientName": "Thunder Client",
-    "collectionName": "Product Manager",
-    "collectionId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
-    "dateExported": "2024-10-12T16:22:59.688Z",
-    "version": "1.2",
-    "folders": [
-        {
-            "_id": "8be0223b-9ff8-45ab-a45a-ba61cedcfd5e",
-            "name": "User",
-            "containerId": "",
-            "created": "2024-08-09T03:44:31.378Z",
-            "sortNum": 10000
-        },
-        {
-            "_id": "318bc515-ddfb-4285-8cb4-cdb04a930745",
-            "name": "Product",
-            "containerId": "",
-            "created": "2024-09-09T13:20:52.612Z",
-            "sortNum": 20000
-        }
-    ],
-    "requests": [
-        {
-            "_id": "6d61832f-c285-46c3-9500-651a989d4e7c",
-            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
-            "containerId": "8be0223b-9ff8-45ab-a45a-ba61cedcfd5e",
-            "name": "Sign Up",
-            "url": "http://localhost:5000/user/signUp",
-            "method": "POST",
-            "sortNum": 10000,
-            "created": "2024-08-09T03:44:01.046Z",
-            "modified": "2024-10-12T15:27:38.230Z",
-            "headers": [],
-            "body": {
-                "type": "formencoded",
-                "raw": "",
-                "form": [
-                    {
-                        "name": "name",
-                        "value": "test"
-                    },
-                    {
-                        "name": "email",
-                        "value": "test@gmail.com"
-                    },
-                    {
-                        "name": "password",
-                        "value": "12345678"
-                    },
-                    {
-                        "name": "phone",
-                        "value": "",
-                        "isDisabled": true
-                    }
-                ]
-            }
-        },
-        {
-            "_id": "4e5db8d5-673b-46b6-b6b3-4498e3d558ee",
-            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
-            "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
-            "name": "Get",
-            "url": "http://localhost:5000/product/",
-            "method": "GET",
-            "sortNum": 20000,
-            "created": "2024-09-09T13:21:02.795Z",
-            "modified": "2024-09-09T19:53:34.520Z",
-            "headers": [],
-            "body": {
-                "type": "formencoded",
-                "raw": "",
-                "form": [
-                    {
-                        "name": "id",
-                        "value": "1",
-                        "isDisabled": true
-                    },
-                    {
-                        "name": "name",
-                        "value": "9",
-                        "isDisabled": true
-                    },
-                    {
-                        "name": "rating",
-                        "value": "3.5",
-                        "isDisabled": true
-                    },
-                    {
-                        "name": "price",
-                        "value": "10000.75",
-                        "isDisabled": true
-                    }
-                ]
-            }
-        },
-        {
-            "_id": "120256a8-58da-4abe-ae12-947f4e860247",
-            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
-            "containerId": "8be0223b-9ff8-45ab-a45a-ba61cedcfd5e",
-            "name": "Log In",
-            "url": "http://localhost:5000/user/logIn",
-            "method": "POST",
-            "sortNum": 20000,
-            "created": "2024-10-12T14:33:36.971Z",
-            "modified": "2024-10-12T16:10:24.887Z",
-            "headers": [],
-            "body": {
-                "type": "formencoded",
-                "raw": "",
-                "form": [
-                    {
-                        "name": "name",
-                        "value": "test",
-                        "isDisabled": true
-                    },
-                    {
-                        "name": "email",
-                        "value": "test@gmail.com"
-                    },
-                    {
-                        "name": "password",
-                        "value": "12345678"
-                    },
-                    {
-                        "name": "phone",
-                        "value": "",
-                        "isDisabled": true
-                    }
-                ]
-            }
-        },
-        {
-            "_id": "c84cb932-dad7-421a-a7e0-211ba3afe906",
-            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
-            "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
-            "name": "Post",
-            "url": "http://localhost:5000/product",
-            "method": "POST",
-            "sortNum": 30000,
-            "created": "2024-09-09T13:21:31.035Z",
-            "modified": "2024-09-09T19:16:22.265Z",
-            "headers": [],
-            "body": {
-                "type": "formencoded",
-                "raw": "",
-                "form": [
-                    {
-                        "name": "name",
-                        "value": "iphone 89"
-                    },
-                    {
-                        "name": "price",
-                        "value": "10000.75"
-                    },
-                    {
-                        "name": "rating",
-                        "value": "3.5"
-                    }
-                ]
-            }
-        },
-        {
-            "_id": "1c3c05ab-72a5-4057-bf34-3753977d5806",
-            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
-            "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
-            "name": "Put",
-            "url": "http://localhost:5000/product",
-            "method": "PUT",
-            "sortNum": 35000,
-            "created": "2024-09-09T13:21:29.475Z",
-            "modified": "2024-09-09T20:14:47.065Z",
-            "headers": [],
-            "body": {
-                "type": "formencoded",
-                "raw": "",
-                "form": [
-                    {
-                        "name": "id",
-                        "value": "1"
-                    },
-                    {
-                        "name": "name",
-                        "value": "iphone 5"
-                    },
-                    {
-                        "name": "price",
-                        "value": ""
-                    },
-                    {
-                        "name": "rating",
-                        "value": ""
-                    }
-                ]
-            }
-        },
-        {
-            "_id": "038757ac-4d43-4cc4-8377-70a4b9b79bc7",
-            "colId": "5f7ffa62-6e02-4cda-b192-fe70750a8c79",
-            "containerId": "318bc515-ddfb-4285-8cb4-cdb04a930745",
-            "name": "Delete",
-            "url": "http://localhost:5000/product",
-            "method": "DELETE",
-            "sortNum": 40000,
-            "created": "2024-09-09T13:21:27.836Z",
-            "modified": "2024-09-09T17:09:18.539Z",
-            "headers": [],
-            "body": {
-                "type": "formencoded",
-                "raw": "",
-                "form": [
-                    {
-                        "name": "id",
-                        "value": "1"
-                    }
-                ]
-            }
-        }
-    ],
-    "ref": "wVR9lAFd2YIX8bLxAn8-AeEP_xiHPGFYIM38EWndCp7NCTZ0-7APUHdDsADBtyB6Y6hI1pKNPRus0t2TH3WnLg"
+	"info": {
+		"_postman_id": "5f18a094-ea5a-42b4-8531-e2cba6e5f8d8",
+		"name": "Product Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26653312"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "0123456789011",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": "http://localhost:5000/user/signUp"
+					},
+					"response": []
+				},
+				{
+					"name": "Log In",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "test@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:5000/user/logIn"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:5000/product/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product",
+								""
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "iphone",
+									"disabled": true
+								},
+								{
+									"key": "rating",
+									"value": "3.5",
+									"disabled": true
+								},
+								{
+									"key": "price",
+									"value": "10000.75",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "iphone 5",
+									"type": "text"
+								},
+								{
+									"key": "rating",
+									"value": "3.5",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "10000.75",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:5000/product/"
+					},
+					"response": []
+				},
+				{
+					"name": "Put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "iphone 9",
+									"type": "text"
+								},
+								{
+									"key": "rating",
+									"value": "3.5",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "10000.75",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:5000/product/"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:5000/product/"
+					},
+					"response": []
+				}
+			]
+		}
+	]
 }

@@ -3,23 +3,33 @@ const { filterByAttributes } = require("./objectsFunctions");
 const functions = (Model) => {
   const validAttributes = Object.keys(Model.rawAttributes);
   return {
-    get: async (options = {}) => {
+    get: async (options = {}, transaction = null) => {
       options = filterByAttributes(options, validAttributes);
       return await Model.findAll({
         where: options,
+        transaction,
       });
     },
-    create: async (data) => {
-      return await Model.create(data);
+    getOne: async (options = {}, transaction = null) => {
+      options = filterByAttributes(options, validAttributes);
+      return await Model.findOne({
+        where: options,
+        transaction,
+      });
     },
-    updateById: async (id, data) => {
+    create: async (data, transaction = null) => {
+      return await Model.create(data, { transaction });
+    },
+    updateById: async (id, data, transaction = null) => {
       return await Model.update(data, {
         where: { id },
+        transaction,
       });
     },
-    deleteById: async (id) => {
+    deleteById: async (id, transaction = null) => {
       return await Model.destroy({
         where: { id },
+        transaction,
       });
     },
   };

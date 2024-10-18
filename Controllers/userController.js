@@ -2,27 +2,21 @@ const { User } = require("../Models/user");
 const { Session } = require("../Models/session");
 const { Op } = require("sequelize");
 const dbFunctions = require("../GlobalFunctions/modelsFunctions");
+const objFunctions = require("../GlobalFunctions/objectsFunctions");
 const bcrypt = require("bcrypt");
 
 const noDoublications = async (user) => {
-  messages = {};
-  const existingUsers = await dbFunctions(User).get({
+  let messages = {};
+  let existingUsers = await dbFunctions(User).get({
     [Op.or]: [
       { name: user.name },
       { email: user.email },
       ...(user.phone !== undefined ? [{ phone: user.phone }] : []),
     ],
   });
-
-  if (existingUsers.length > 0) {
-    if (existingUsers.find((u) => u.name === user.name)) {
-      messages.name = "name already taken";
-    }
-    if (existingUsers.find((u) => u.email === user.email)) {
-      messages.email = "email already registered";
-    }
-    if (existingUsers.find((u) => u.phone === user.phone)) {
-      messages.phone = "phone already registered";
+  for (const key in user) {
+    if (existingUsers.find((u) => u[key] === user[key])) {
+      messages[key] = `${key} already registered`;
     }
   }
   return messages;
@@ -34,7 +28,9 @@ const signUp = async (req, res) => {
     if (data.phone === "") {
       data.phone = undefined;
     }
-    errorMessages = await noDoublications(data);
+    errorMessages = await noDoublications(
+      objFunctions.filterByAttributes(data, ["name", "email", "phone"])
+    );
     if (Object.keys(errorMessages).length > 0) {
       return res.status(400).json(errorMessages);
     }
@@ -55,7 +51,7 @@ const signUp = async (req, res) => {
   }
 };
 
-const logIn = async (req, res, next) => {
+const logIn = async (req, res) => {
   try {
     let user = await User.findOne({
       where: { email: req.body.email },
@@ -63,7 +59,6 @@ const logIn = async (req, res, next) => {
 
     if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
       return res.status(404).json("Incorrect Email or Password");
-      // return next(new Error("Incorrect Email or Password"));
     }
 
     const session = await dbFunctions(Session).create({

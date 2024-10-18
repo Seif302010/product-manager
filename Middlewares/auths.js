@@ -9,8 +9,7 @@ const Protect = async (req, res, next) => {
   if (!token) {
     return res
       .status(401)
-      .json("Your Not Logged In, Please Login to get accces this route");
-    // return next( new Error("Your Not Log In, Please Login to get accces this route", 401));
+      .json("You're Not Logged In, Please Login to get accces this route");
   }
   const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
   console.log(decoded);
@@ -29,7 +28,6 @@ const allowedTo =
   async (req, res, next) => {
     if (!roles.includes(req.user.roles)) {
       return res.status(403).json("You are Not Allowed To Acces This Route");
-      // return next(new Error("You are Not Allowed To Acces This Route", 403));
     }
     next();
   };
