@@ -22,7 +22,7 @@ const serverError = (res, error) => {
 
 const get = async (req, res) => {
   try {
-    const data = req.body;
+    const data = req.query;
     data.name = { [Op.like]: `%${data.name || ""}%` };
     return res.status(200).json(await dbFunctions.get(data));
   } catch (error) {
