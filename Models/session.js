@@ -40,7 +40,7 @@ async function generateUniqueToken(userId) {
 Session.beforeCreate(async (session, options) => {
   if (session.userId) {
     await Session.update(
-      { isActive: false, lastActiveAt: new Date() },
+      { isActive: false },
       {
         where: {
           userId: session.userId,
