@@ -2,6 +2,7 @@ const { filterByAttributes } = require("./objectsFunctions");
 
 const functions = (Model) => {
   const validAttributes = Object.keys(Model.rawAttributes);
+  const primaryKey = Model.primaryKeyAttribute;
   return {
     get: async (options = {}, transaction = null) => {
       options = filterByAttributes(options, validAttributes);
@@ -22,13 +23,13 @@ const functions = (Model) => {
     },
     updateById: async (id, data, transaction = null) => {
       return await Model.update(data, {
-        where: { id },
+        where: { [primaryKey]: id },
         transaction,
       });
     },
     deleteById: async (id, transaction = null) => {
       return await Model.destroy({
-        where: { id },
+        where: { [primaryKey]: id },
         transaction,
       });
     },
