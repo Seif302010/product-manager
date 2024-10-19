@@ -7,7 +7,7 @@ const dbFunctions = require("../GlobalFunctions/modelsFunctions");
 const Protect = async (req, res, next) => {
   let token = req.headers.authorization || "";
   try {
-    let session = await dbFunctions(Session).getOne({ token });
+    let session = await dbFunctions(Session).getOne({ token, isActive: true });
     if (!session || !session.userId) {
       return res.status(401).json({
         message: "You're Not Logged In, Please Login to get accces this route",
