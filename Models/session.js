@@ -22,13 +22,10 @@ const Session = sequelize.define(
       },
       allowNull: true,
     },
-    lastActiveAt: {
-      type: DataTypes.DATE,
-    },
   },
   {
-    timestamps: true,
-    createdAt: true,
+    timestamps: false,
+    createdAt: false,
     updatedAt: false,
     id: false,
   }

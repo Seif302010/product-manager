@@ -1,32 +1,40 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const { User } = require("../Models/user");
+const { Session } = require("../Models/session");
+const dbFunctions = require("../GlobalFunctions/modelsFunctions");
 
 const Protect = async (req, res, next) => {
-  let token;
-  if (req.headers.authorization) {
-    token = req.headers.authorization.split(" ")[1];
+  let token = req.headers.authorization || "";
+  try {
+    let session = await dbFunctions(Session).getOne({ token });
+    if (!session || !session.userId) {
+      return res.status(401).json({
+        message: "You're Not Logged In, Please Login to get accces this route",
+      });
+    }
+    let decoded = jwt.decode(token);
+    const expirationDate = decoded.exp * 1000;
+    if (Date.now() >= expirationDate) {
+      await dbFunctions(Session).updateById(token, {
+        isActive: false,
+      });
+      return res.status(401).json({
+        message: "Token expired",
+      });
+    }
+    req.user = await dbFunctions(User).getOne({ id: session.userId });
+    req.user.token = token;
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
   }
-  if (!token) {
-    return res
-      .status(401)
-      .json("You're Not Logged In, Please Login to get accces this route");
-  }
-  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-  console.log(decoded);
-
-  // const currentUser = await User.findById(decoded.userId);
-  // if(!currentUser){
-  //   return next(new Error("The User That belong to this token does no longer",401));
-  // }
-
-  req.user = currentUser;
   next();
 };
 
 const allowedTo =
   (...roles) =>
   async (req, res, next) => {
-    if (!roles.includes(req.user.roles)) {
+    if (!roles.includes(req.user.role)) {
       return res.status(403).json("You are Not Allowed To Acces This Route");
     }
     next();
