@@ -12,7 +12,7 @@ const { Product } = require("../Models/product");
 const adminAuth = [authService.Protect, authService.allowedTo("admin")];
 router_template(
   router,
-  [{ request: productController.get }],
+  [{ request: productController.get, middlewares: [adminAuth[0]] }],
   [
     {
       request: productController.post,
