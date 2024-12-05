@@ -10,27 +10,6 @@ const { Product } = require("../Models/product");
 // انا عاملها عشان لاقيت نفسي بكرر اكواد  GlobalFunctions  هتلاقي حاجات زي كده في
 
 const adminAuth = [authService.Protect, authService.allowedTo("admin")];
-router_template(
-  router,
-  [{ request: productController.get, middlewares: [adminAuth[0]] }],
-  [
-    {
-      request: productController.post,
-      middlewares: [...adminAuth, validateModel(Product)],
-    },
-  ],
-  [
-    {
-      request: productController.put,
-      middlewares: [...adminAuth],
-    },
-  ],
-  [
-    {
-      request: productController.del,
-      middlewares: [...adminAuth],
-    },
-  ]
-);
+router.get("/", /* [adminAuth[0]],*/ productController.get);
 
 module.exports = router;
