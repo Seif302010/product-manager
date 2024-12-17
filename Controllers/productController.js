@@ -27,7 +27,7 @@ const requests = {
   get: async (req, res) => {
     try {
       const filters = req.query;
-      filters.name = filters.name.toLowerCase();
+      filters.name = (filters.name || "").toLowerCase();
       filters.pageNumber = filters.pageNumber > 0 ? filters.pageNumber : 1;
       filters.numOfElements =
         filters.numOfElements > 0 ? filters.numOfElements : 5;
@@ -38,20 +38,20 @@ const requests = {
           const rating = parseFloat(product.ProductRatings);
           const name = product.ProductTitle.toLowerCase();
           return (
-            name.includes(filters.name || "") &&
+            name.includes(filters.name) &&
             price >= (filters.minPrice || 0) &&
             price <= (filters.maxPrice || Infinity) &&
             rating >= (filters.minRating || 0) &&
             rating <= (filters.maxRating || Infinity)
           );
         })
+        .slice(start, start + filters.numOfElements)
         .map((product) => ({
           id: product.ProductID,
           name: product.ProductTitle,
           price: parseFloat(product.ProductPrice),
           rating: parseFloat(product.ProductRatings),
-        }))
-        .slice(start, start + filters.numOfElements);
+        }));
       return res.status(200).json(result);
     } catch (error) {
       return serverError(res, error);
