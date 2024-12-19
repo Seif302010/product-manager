@@ -17,7 +17,7 @@ const asyncTables = async () => {
 };
 
 const insertProducts = async () => {
-  if (Product.count() === 0) {
+  if ((await Product.count()) === 0) {
     const noonData = require("../Data/noon/Noon_ALL_product_Dataset_Final.json");
     const jumiaData = require("../Data/jumia/Jumia_Data.json");
     let allData = [...noonData, ...jumiaData];
@@ -42,7 +42,7 @@ const insertProducts = async () => {
 };
 
 const insertProductReviews = async () => {
-  if (Product.count() === 0) {
+  if ((await ProductReview.count()) === 0) {
     const noonReviews = require("../Data/noon/Noon_ALL_product_Reviews_Final.json");
     const jumiaReviews =
       require("../Data/jumia/Jumia_Products_Reviews.json").map((item) => ({
@@ -50,7 +50,7 @@ const insertProductReviews = async () => {
         review: item.ProductReviews,
         ratimg: item["Review Rating"],
       }));
-    const allReviews = [...jumiaReviews, noonReviews];
+    const allReviews = [...jumiaReviews, ...noonReviews];
     ProductReview.bulkCreate(allReviews, { validate: true });
   }
 };
