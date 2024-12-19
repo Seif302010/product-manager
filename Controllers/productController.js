@@ -22,19 +22,19 @@ const requests = {
       const start = (filters.pageNumber - 1) * filters.numOfElements;
       const result = (
         await Product.findAll({
-          // where: {
-          //   ProductTitle: {
-          //     [Op.iLike]: `%${filters.name}%`,
-          //   },
-          //   ProductPrice: {
-          //     [Op.gte]: filters.minPrice || 0,
-          //     [Op.lte]: filters.maxPrice || Infinity,
-          //   },
-          //   ProductRatings: {
-          //     [Op.gte]: filters.minRating || 0,
-          //     [Op.lte]: filters.maxRating || Infinity,
-          //   },
-          // },
+          where: {
+            // ProductTitle: {
+            //   [Op.iLike]: `%${filters.name}%`,
+            // },
+            // ProductPrice: {
+            //   [Op.gte]: filters.minPrice || 0,
+            //   [Op.lte]: filters.maxPrice || Infinity,
+            // },
+            ProductRatings: {
+              [Op.gte]: filters.minRating || 0,
+              [Op.lte]: filters.maxRating || 5,
+            },
+          },
           offset: start,
           limit: filters.numOfElements,
         })
@@ -48,6 +48,17 @@ const requests = {
       return res.status(200).json(result);
     } catch (error) {
       return serverError(res, error);
+    }
+  },
+  getById: async (req, res) => {
+    const productId = req.query.id.toString();
+
+    const product = await Product.findOne({ where: { ProductID: productId } });
+
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).json({ message: "Product not found" });
     }
   },
 };
