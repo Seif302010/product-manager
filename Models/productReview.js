@@ -15,10 +15,10 @@ const ProductReview = sequelize.define(
     },
     ProductID: {
       type: DataTypes.STRING,
-      references: {
-        model: Product,
-        key: "ProductID",
-      },
+      // references: {
+      //   model: Product,
+      //   key: "ProductID",
+      // },
       allowNull: true,
     },
   },
@@ -29,13 +29,13 @@ const ProductReview = sequelize.define(
   }
 );
 
-Product.hasMany(ProductReview, {
-  foreignKey: "ProductID",
-  onDelete: "SET NULL",
-});
+// Product.hasMany(ProductReview, {
+//   foreignKey: "ProductID",
+//   onDelete: "SET NULL",
+// });
 
-ProductReview.belongsTo(Product, {
-  foreignKey: "ProductID",
-});
+// ProductReview.belongsTo(Product, {
+//   foreignKey: "ProductID",
+// });
 
 module.exports = { ProductReview };

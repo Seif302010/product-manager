@@ -24,7 +24,7 @@ app.use("/product", productRoute);
   try {
     await asyncTables();
     await insertProducts();
-    // await insertProductReviews();
+    await insertProductReviews();
     app.listen(port, () => {
       console.log(`App listening at http://localhost:${port}`);
     });
