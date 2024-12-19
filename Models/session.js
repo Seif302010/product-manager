@@ -22,6 +22,15 @@ const Session = sequelize.define(
       },
       allowNull: true,
     },
+    loggedInAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+      allowNull: true,
+    },
+    loggedOutAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
   },
   {
     timestamps: false,
@@ -39,15 +48,6 @@ async function generateUniqueToken(userId) {
 
 Session.beforeCreate(async (session, options) => {
   if (session.userId) {
-    await Session.update(
-      { isActive: false },
-      {
-        where: {
-          userId: session.userId,
-          isActive: true,
-        },
-      }
-    );
     session.token = await generateUniqueToken(session.userId);
   }
 });

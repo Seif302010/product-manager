@@ -1,6 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-const { asyncTables } = require("./DataBase/dbManager");
+const {
+  asyncTables,
+  insertProducts,
+  insertProductReviews,
+} = require("./DataBase/dbManager");
 const userRoute = require("./Routes/userRoute");
 const productRoute = require("./Routes/productRoute");
 
@@ -19,6 +23,8 @@ app.use("/product", productRoute);
 (async () => {
   try {
     await asyncTables();
+    await insertProducts();
+    // await insertProductReviews();
     app.listen(port, () => {
       console.log(`App listening at http://localhost:${port}`);
     });

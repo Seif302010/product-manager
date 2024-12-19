@@ -1,18 +1,9 @@
 const { Product } = require("../Models/product");
 const { Op } = require("sequelize");
 const dbFunctions = require("../GlobalFunctions/modelsFunctions")(Product);
-const {
-  filterByDeletingEmpty,
-} = require("../GlobalFunctions/objectsFunctions");
-
-const nameExists = async (product, id = 0) => {
-  const existingProducts = await dbFunctions.get({
-    name: product.name,
-    ...(id !== 0 && { id: { [Op.ne]: id } }),
-  });
-
-  return existingProducts.length > 0;
-};
+const noonData = require("../Data/noon/Noon_ALL_product_Dataset_Final.json");
+const jumiaData = require("../Data/jumia/Jumia_Data.json");
+const allData = [...noonData, ...jumiaData];
 
 const serverError = (res, error) => {
   return res
@@ -23,55 +14,51 @@ const serverError = (res, error) => {
 const requests = {
   get: async (req, res) => {
     try {
-      const data = req.query;
-      data.name = { [Op.like]: `%${data.name || ""}%` };
-      return res.status(200).json(await dbFunctions.get(data));
+      const filters = req.query;
+      filters.name = filters.name || "";
+      filters.pageNumber = filters.pageNumber > 0 ? filters.pageNumber : 1;
+      filters.numOfElements =
+        filters.numOfElements > 0 ? filters.numOfElements : 5;
+      const start = (filters.pageNumber - 1) * filters.numOfElements;
+      const result = (
+        await Product.findAll({
+          where: {
+            // ProductTitle: {
+            //   [Op.iLike]: `%${filters.name}%`,
+            // },
+            // ProductPrice: {
+            //   [Op.gte]: filters.minPrice || 0,
+            //   [Op.lte]: filters.maxPrice || Infinity,
+            // },
+            ProductRatings: {
+              [Op.gte]: filters.minRating || 0,
+              [Op.lte]: filters.maxRating || 5,
+            },
+          },
+          offset: start,
+          limit: filters.numOfElements,
+        })
+      ).map((product) => ({
+        id: product.ProductID,
+        name: product.ProductTitle,
+        price: parseFloat(product.ProductPrice),
+        rating: parseFloat(product.ProductRatings),
+        image: product.ProductImage,
+      }));
+      return res.status(200).json(result);
     } catch (error) {
       return serverError(res, error);
     }
   },
-  post: async (req, res) => {
-    try {
-      const data = req.body;
-      console.log(data);
-      if (await nameExists(data))
-        return res.status(400).json({ name: "name already exists" });
-      let product = await dbFunctions.create(data);
-      return res.status(201).json(product);
-    } catch (error) {
-      return serverError(res, error);
-    }
-  },
-  put: async (req, res) => {
-    try {
-      const data = filterByDeletingEmpty(req.body);
-      const id = data.id || 0;
-      delete data.id;
-      if (await nameExists(data, id))
-        return res.status(400).json({ name: "name already exists" });
-      const affectedRows = await dbFunctions.updateById(id, data);
-      if (affectedRows > 0) {
-        return res
-          .status(200)
-          .json({ message: "Record updated successfully." });
-      } else {
-        return res.status(404).json({ message: "Record not found." });
-      }
-    } catch (error) {
-      return serverError(res, error);
-    }
-  },
-  del: async (req, res) => {
-    try {
-      id = req.body.id || 0;
-      const affectedRows = await dbFunctions.deleteById(id);
-      if (affectedRows > 0) {
-        return res.status(200).json({ message: "Record deleted" });
-      } else {
-        return res.status(404).json({ message: "Record not found" });
-      }
-    } catch (error) {
-      return serverError(res, error);
+  getById: async (req, res) => {
+    const productId = req.query.id.toString();
+
+    const product = await Product.findOne({ where: { ProductID: productId } });
+
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).json({ message: "Product not found" });
     }
   },
 };

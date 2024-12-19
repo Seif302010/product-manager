@@ -128,23 +128,38 @@
 							],
 							"query": [
 								{
-									"key": "id",
+									"key": "name",
+									"value": "samsung",
+									"disabled": true
+								},
+								{
+									"key": "pageNumber",
 									"value": "1",
 									"disabled": true
 								},
 								{
-									"key": "name",
-									"value": "iphone",
+									"key": "numOfElements",
+									"value": "5",
 									"disabled": true
 								},
 								{
-									"key": "rating",
-									"value": "3.5",
+									"key": "minPrice",
+									"value": "5000",
 									"disabled": true
 								},
 								{
-									"key": "price",
-									"value": "10000.75",
+									"key": "maxPrice",
+									"value": "50000",
+									"disabled": true
+								},
+								{
+									"key": "minRating",
+									"value": "3.0",
+									"disabled": true
+								},
+								{
+									"key": "maxRating",
+									"value": "4.5",
 									"disabled": true
 								}
 							]
@@ -153,102 +168,36 @@
 					"response": []
 				},
 				{
-					"name": "Post",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "authorization",
-								"value": "",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "iphone 5",
-									"type": "text"
-								},
-								{
-									"key": "rating",
-									"value": "3.5",
-									"type": "text"
-								},
-								{
-									"key": "price",
-									"value": "10000.75",
-									"type": "text"
-								}
-							]
-						},
-						"url": "http://localhost:5000/product/"
+					"name": "Get By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
 					},
-					"response": []
-				},
-				{
-					"name": "Put",
 					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "authorization",
-								"value": "",
-								"type": "text"
-							}
-						],
+						"method": "GET",
+						"header": [],
 						"body": {
 							"mode": "urlencoded",
-							"urlencoded": [
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:5000/product/getById",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product",
+								"getById"
+							],
+							"query": [
 								{
 									"key": "id",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "iphone 9",
-									"type": "text"
-								},
-								{
-									"key": "rating",
-									"value": "3.5",
-									"type": "text"
-								},
-								{
-									"key": "price",
-									"value": "10000.75",
-									"type": "text"
+									"value": "AC008CL00QICSNAFAMZ",
+									"disabled": true
 								}
 							]
-						},
-						"url": "http://localhost:5000/product/"
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "authorization",
-								"value": "",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "id",
-									"value": "1",
-									"type": "text"
-								}
-							]
-						},
-						"url": "http://localhost:5000/product/"
+						}
 					},
 					"response": []
 				}

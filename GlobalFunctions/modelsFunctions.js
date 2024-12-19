@@ -1,3 +1,4 @@
+const { OFFSET } = require("tedious/lib/packet");
 const { filterByAttributes } = require("./objectsFunctions");
 
 const functions = (Model) => {
