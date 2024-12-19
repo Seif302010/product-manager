@@ -3,6 +3,7 @@ const { Op } = require("sequelize");
 const dbFunctions = require("../GlobalFunctions/modelsFunctions")(Product);
 const noonData = require("../Data/noon/Noon_ALL_product_Dataset_Final.json");
 const jumiaData = require("../Data/jumia/Jumia_Data.json");
+const { ProductReview } = require("../Models/productReview");
 const allData = [...noonData, ...jumiaData];
 
 const serverError = (res, error) => {
@@ -53,8 +54,16 @@ const requests = {
   getById: async (req, res) => {
     const productId = req.query.id.toString();
 
-    const product = await Product.findOne({ where: { ProductID: productId } });
-
+    let product = await Product.findOne({
+      where: { ProductID: productId },
+      raw: true,
+    });
+    const reviews = await ProductReview.findAll({
+      attributes: { exclude: ["ProductID"] },
+      where: { ProductID: productId },
+      raw: true,
+    });
+    product.reviews = reviews;
     if (product) {
       res.json(product);
     } else {
