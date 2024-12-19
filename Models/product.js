@@ -2,45 +2,69 @@ const { sequelize } = require("../DataBase/sequelize");
 
 const { DataTypes } = require("sequelize");
 
-const Product = sequelize.define("product", {
-  name: {
-    type: DataTypes.STRING,
-    unique: true,
-    allowNull: false,
-    validate: {
-      notEmpty: {
-        msg: "Name is required.",
-      },
-      len: {
-        args: [3, 50],
-        msg: "Name must be between 3 and 50 characters long.",
-      },
+const Product = sequelize.define(
+  "product",
+  {
+    ProductID: {
+      type: DataTypes.STRING,
+      primaryKey: true,
+    },
+    Marketplace: {
+      type: DataTypes.STRING,
+    },
+    ProductBrand: {
+      type: DataTypes.STRING,
+    },
+    ProductCategory: {
+      type: DataTypes.STRING,
+    },
+    ProductDescription: {
+      type: DataTypes.TEXT("long"),
+    },
+    ProductImage: {
+      type: DataTypes.STRING,
+    },
+    ProductLink: {
+      type: DataTypes.STRING,
+    },
+    ProductOldPrice: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0.0,
+    },
+    ProductPrice: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0.0,
+    },
+    ProductRatingCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    ProductRatings: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0.0,
+    },
+    ProductSpecifications: {
+      type: DataTypes.TEXT("long"),
+    },
+    ProductSubCategory: {
+      type: DataTypes.STRING,
+    },
+    ProductTitle: {
+      type: DataTypes.STRING,
+    },
+    SellerName: {
+      type: DataTypes.STRING,
+    },
+    SellerUrl: {
+      type: DataTypes.STRING,
     },
   },
-  price: {
-    type: DataTypes.FLOAT,
-    defaultValue:0.0,
-    validate: {
-        min: {
-          args: [0],
-          msg: "Price cannot be less than 0.",
-        },
-      },
-  },
-  rating: {
-    type: DataTypes.FLOAT,
-    defaultValue:0.0,
-    validate: {
-        max: {
-          args: [5],
-          msg: "Rating cannot be greater than 5.",
-        },
-        min: {
-          args: [0],
-          msg: "Rating cannot be less than 0.",
-        },
-      },
-  },
-});
+  {
+    timestamps: false,
+    createdAt: false,
+    updatedAt: false,
+    id: false,
+  }
+);
 
 module.exports = { Product };

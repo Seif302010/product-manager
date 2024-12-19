@@ -69,11 +69,8 @@ const requests = {
       user = user.get({ plain: true });
       delete user.password;
       user.token = session.token;
-
-      // Respond with success message and token
       return res.status(200).json(user);
     } catch (error) {
-      // Handle errors
       return res.status(500).json({ message: error.message });
     }
   },
@@ -82,6 +79,7 @@ const requests = {
       const token = req.headers.authorization;
       await dbFunctions(Session).updateById(token, {
         isActive: false,
+        loggedOutAt: new Date(),
       });
       return res.status(200).json({ message: "Logged out!" });
     } catch (error) {

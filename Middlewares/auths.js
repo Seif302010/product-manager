@@ -7,13 +7,13 @@ const dbFunctions = require("../GlobalFunctions/modelsFunctions");
 const Protect = async (req, res, next) => {
   let token = req.headers.authorization || "";
   try {
-    let session = await dbFunctions(Session).getOne({ token, isActive: true });
-    if (!session || !session.userId) {
+    if (token == "") {
       return res.status(401).json({
-        message: "You're Not Logged In, Please Login to get accces this route",
+        message: "You are not logged in",
       });
     }
-    let decoded = jwt.decode(token);
+    let decoded = jwt.decode(token, process.env.JWT_SECRET_KEY);
+
     const expirationDate = decoded.exp * 1000;
     if (Date.now() >= expirationDate) {
       await dbFunctions(Session).updateById(token, {
@@ -23,7 +23,7 @@ const Protect = async (req, res, next) => {
         message: "Token expired",
       });
     }
-    req.user = await dbFunctions(User).getOne({ id: session.userId });
+    req.user = await dbFunctions(User).getOne({ id: decoded.userId });
     req.user.token = token;
   } catch (error) {
     return res.status(500).json({ message: error.message });
