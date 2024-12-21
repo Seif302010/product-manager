@@ -7,6 +7,6 @@ const { User } = require("../Models/user");
 
 router.post("/signUp", validateModel(User), userController.signUp);
 router.post("/logIn", userController.logIn);
-router.post("/logOut", authService.Protect, userController.logOut);
+router.post("/logOut", authService.allowedTo("user"), userController.logOut);
 
 module.exports = router;

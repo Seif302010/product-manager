@@ -7,9 +7,4 @@ node_modules
 *.jpeg
 *.png
 *.webp
-Data/noon/Noon_ALL_Seller_Reviews_Final.json
-Data/noon/Noon_ALL_product_Reviews_Final.json
-Data/noon/Noon_ALL_product_Dataset_Final.json
-Data/jumia/Jumia_Sellers_Reviews.json
-Data/jumia/Jumia_Products_Reviews.json
-Data/jumia/Jumia_Data.json
+Data/
