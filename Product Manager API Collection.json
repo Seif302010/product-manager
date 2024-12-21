@@ -110,13 +110,19 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://localhost:5000/product/",
+							"raw": "http://localhost:5000/product/?name=samsung&pageNumber=1&numOfElements=5&minPrice=5000&maxPrice=50000&minRating=3.0&maxRating=4.5&marketplace=noon",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -129,38 +135,35 @@
 							"query": [
 								{
 									"key": "name",
-									"value": "samsung",
-									"disabled": true
+									"value": "samsung"
 								},
 								{
 									"key": "pageNumber",
-									"value": "1",
-									"disabled": true
+									"value": "1"
 								},
 								{
 									"key": "numOfElements",
-									"value": "5",
-									"disabled": true
+									"value": "5"
 								},
 								{
 									"key": "minPrice",
-									"value": "5000",
-									"disabled": true
+									"value": "5000"
 								},
 								{
 									"key": "maxPrice",
-									"value": "50000",
-									"disabled": true
+									"value": "50000"
 								},
 								{
 									"key": "minRating",
-									"value": "3.0",
-									"disabled": true
+									"value": "3.0"
 								},
 								{
 									"key": "maxRating",
-									"value": "4.5",
-									"disabled": true
+									"value": "4.5"
+								},
+								{
+									"key": "marketplace",
+									"value": "noon"
 								}
 							]
 						}
@@ -174,13 +177,19 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://localhost:5000/product/getById",
+							"raw": "http://localhost:5000/product/getById?id=AC008CL00QICSNAFAMZ",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -193,8 +202,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "AC008CL00QICSNAFAMZ",
-									"disabled": true
+									"value": "AC008CL00QICSNAFAMZ"
 								}
 							]
 						}
