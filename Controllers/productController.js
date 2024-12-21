@@ -1,10 +1,6 @@
 const { Product } = require("../Models/product");
-const { Sequelize, Op } = require("sequelize");
-const dbFunctions = require("../GlobalFunctions/modelsFunctions")(Product);
-const noonData = require("../Data/noon/Noon_ALL_product_Dataset_Final.json");
-const jumiaData = require("../Data/jumia/Jumia_Data.json");
+const { Op } = require("sequelize");
 const { ProductReview } = require("../Models/productReview");
-const allData = [...noonData, ...jumiaData];
 
 const serverError = (res, error) => {
   return res
