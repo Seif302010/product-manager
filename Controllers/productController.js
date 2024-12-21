@@ -44,13 +44,6 @@ const requests = {
         offset: start,
         limit: filters.numOfElements,
       });
-      // .map((product) => ({
-      //   id: product.ProductID,
-      //   name: product.ProductTitle,
-      //   price: product.ProductPrice,
-      //   rating: product.ProductRatings,
-      //   image: product.ProductImage,
-      // }));
       const response = {
         data: result.rows.map((product) => ({
           id: product.ProductID,
