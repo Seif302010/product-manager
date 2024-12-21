@@ -4,6 +4,7 @@ const { User } = require("../Models/user");
 const { Session } = require("../Models/session");
 const { Product } = require("../Models/product");
 const { ProductReview } = require("../Models/productReview");
+const { all } = require("../Routes/productRoute");
 
 const asyncTables = async () => {
   try {
@@ -16,42 +17,84 @@ const asyncTables = async () => {
   }
 };
 
+const mapProducts = async (products) => {
+  return await products.map((item) => ({
+    ...item,
+    ProductOldPrice:
+      item.ProductOldPrice.trim() !== "" ? parseFloat(item.ProductOldPrice) : 0,
+    ProductPrice:
+      item.ProductPrice.trim() !== "" ? parseFloat(item.ProductPrice) : 0,
+    ProductRatings:
+      item.ProductRatings.trim() !== "" ? parseFloat(item.ProductRatings) : 0,
+    ProductRatingCount:
+      item.ProductRatingCount.trim() !== ""
+        ? parseInt(item.ProductRatingCount)
+        : 0,
+    ProductSpecifications: JSON.stringify(item.ProductSpecifications),
+  }));
+};
+
 const insertProducts = async () => {
-  if ((await Product.count()) === 0) {
-    const noonData = require("../Data/noon/Noon_ALL_product_Dataset_Final.json");
-    const jumiaData = require("../Data/jumia/Jumia_Data.json");
-    let allData = [...noonData, ...jumiaData];
-    allData = allData.map((item) => ({
-      ...item,
-      ProductOldPrice:
-        item.ProductOldPrice.trim() !== ""
-          ? parseFloat(item.ProductOldPrice)
-          : 0,
-      ProductPrice:
-        item.ProductPrice.trim() !== "" ? parseFloat(item.ProductPrice) : 0,
-      ProductRatings:
-        item.ProductRatings.trim() !== "" ? parseFloat(item.ProductRatings) : 0,
-      ProductRatingCount:
-        item.ProductRatingCount.trim() !== ""
-          ? parseInt(item.ProductRatingCount)
-          : 0,
-      ProductSpecifications: JSON.stringify(item.ProductSpecifications),
-    }));
-    Product.bulkCreate(allData, { validate: true });
+  try {
+    if ((await Product.count()) === 0) {
+      const seenProductIDs = new Set();
+      const allData = require("../Data/Updated_project_Products_Datasets.json")
+        .filter((item) => {
+          if (seenProductIDs.has(item.ProductID)) {
+            return false;
+          }
+          seenProductIDs.add(item.ProductID);
+          return true;
+        })
+        .map((item) => ({
+          ...item,
+          ProductOldPrice:
+            item.ProductOldPrice.trim() !== ""
+              ? parseFloat(item.ProductOldPrice)
+              : 0,
+          ProductPrice:
+            item.ProductPrice.trim() !== "" ? parseFloat(item.ProductPrice) : 0,
+          ProductRatings:
+            item.ProductRatings.trim() !== ""
+              ? parseFloat(item.ProductRatings)
+              : 0,
+          ProductRatingCount:
+            item.ProductRatingCount.trim() !== ""
+              ? parseInt(item.ProductRatingCount)
+              : 0,
+          ProductSpecifications: JSON.stringify(item.ProductSpecifications),
+        }));
+
+      await Product.bulkCreate(allData, { validate: true, logging: false });
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
 const insertProductReviews = async () => {
-  if ((await ProductReview.count()) === 0) {
-    const noonReviews = require("../Data/noon/Noon_ALL_product_Reviews_Final.json");
-    const jumiaReviews =
-      require("../Data/jumia/Jumia_Products_Reviews.json").map((item) => ({
-        ProductID: item.ProductID,
-        review: item.ProductReviews,
-        ratimg: item["Review Rating"],
-      }));
-    const allReviews = [...jumiaReviews, ...noonReviews];
-    ProductReview.bulkCreate(allReviews, { validate: true });
+  try {
+    if ((await ProductReview.count()) === 0) {
+      const noonReviews = require("../Data/noon/Noon_ALL_product_Reviews_Final.json");
+      const jumiaReviews =
+        require("../Data/jumia/Jumia_Products_Reviews.json").map((item) => ({
+          ProductID: item.ProductID,
+          review: item.ProductReviews,
+          ratimg: item["Review Rating"],
+        }));
+      await ProductReview.bulkCreate(noonReviews, {
+        validate: true,
+        logging: false,
+      });
+      console.log("noon reviews inserted");
+      await ProductReview.bulkCreate(jumiaReviews, {
+        validate: true,
+        logging: false,
+      });
+      console.log("jumia reviews inserted");
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
