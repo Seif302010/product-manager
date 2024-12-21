@@ -17,23 +17,6 @@ const asyncTables = async () => {
   }
 };
 
-const mapProducts = async (products) => {
-  return await products.map((item) => ({
-    ...item,
-    ProductOldPrice:
-      item.ProductOldPrice.trim() !== "" ? parseFloat(item.ProductOldPrice) : 0,
-    ProductPrice:
-      item.ProductPrice.trim() !== "" ? parseFloat(item.ProductPrice) : 0,
-    ProductRatings:
-      item.ProductRatings.trim() !== "" ? parseFloat(item.ProductRatings) : 0,
-    ProductRatingCount:
-      item.ProductRatingCount.trim() !== ""
-        ? parseInt(item.ProductRatingCount)
-        : 0,
-    ProductSpecifications: JSON.stringify(item.ProductSpecifications),
-  }));
-};
-
 const insertProducts = async () => {
   try {
     if ((await Product.count()) === 0) {
