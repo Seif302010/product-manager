@@ -36,4 +36,4 @@ const allowedTo =
     next();
   };
 
-module.exports = { Protect, allowedTo };
+module.exports = { allowedTo };
