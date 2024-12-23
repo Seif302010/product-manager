@@ -22,10 +22,10 @@ const Product = sequelize.define(
       type: DataTypes.TEXT("long"),
     },
     ProductImage: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT("long"),
     },
     ProductLink: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT("long"),
     },
     ProductOldPrice: {
       type: DataTypes.FLOAT,
@@ -56,7 +56,7 @@ const Product = sequelize.define(
       type: DataTypes.STRING,
     },
     SellerUrl: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT("long"),
     },
   },
   {

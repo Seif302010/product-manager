@@ -3,17 +3,24 @@ const { sequelize } = require("../DataBase/sequelize");
 const { DataTypes } = require("sequelize");
 const { Product } = require("./product");
 
-const ProductReview = sequelize.define(
-  "productReview",
+const Review = sequelize.define(
+  "review",
   {
     review: {
       type: DataTypes.TEXT("long"),
+    },
+    category: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    sentiment: {
+      type: DataTypes.STRING,
     },
     rating: {
       type: DataTypes.FLOAT,
       defaultValue: 0.0,
     },
-    ProductID: {
+    reviewedID: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -24,4 +31,4 @@ const ProductReview = sequelize.define(
     updatedAt: false,
   }
 );
-module.exports = { ProductReview };
+module.exports = { Review };

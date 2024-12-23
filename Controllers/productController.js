@@ -1,6 +1,6 @@
 const { Product } = require("../Models/product");
 const { Op } = require("sequelize");
-const { ProductReview } = require("../Models/productReview");
+const { Review } = require("../Models/review");
 
 const serverError = (res, error) => {
   return res
@@ -44,9 +44,11 @@ const requests = {
         data: result.rows.map((product) => ({
           id: product.ProductID,
           name: product.ProductTitle,
+          marketplace: product.Marketplace,
           price: product.ProductPrice,
           rating: product.ProductRatings,
           image: product.ProductImage,
+          description: product.ProductDescription,
         })),
         rowCount: result.count,
       };
@@ -62,12 +64,18 @@ const requests = {
         where: { ProductID: productId },
         raw: true,
       });
-      const reviews = await ProductReview.findAll({
-        attributes: { exclude: ["ProductID", "id"] },
-        where: { ProductID: productId },
+      const reviews = await Review.findAll({
+        attributes: { exclude: ["reviewedID", "id"] },
+        where: { reviewedID: productId },
+        raw: true,
+      });
+      const sellerReviews = await Review.findAll({
+        attributes: { exclude: ["reviewedID", "id", "category"] },
+        where: { reviewedID: product.SellerName },
         raw: true,
       });
       product.reviews = reviews;
+      product.sellerReviews = sellerReviews;
       product.ProductSpecifications = JSON.parse(product.ProductSpecifications);
       if (product) {
         res.json(product);
