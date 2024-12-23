@@ -1,6 +1,6 @@
 const { Product } = require("../Models/product");
 const { Op } = require("sequelize");
-const { ProductReview } = require("../Models/productReview");
+const { Review } = require("../Models/review");
 
 const serverError = (res, error) => {
   return res
@@ -63,9 +63,9 @@ const requests = {
         where: { ProductID: productId },
         raw: true,
       });
-      const reviews = await ProductReview.findAll({
-        attributes: { exclude: ["ProductID", "id"] },
-        where: { ProductID: productId },
+      const reviews = await Review.findAll({
+        attributes: { exclude: ["reviewedID", "id"] },
+        where: { reviewedID: productId },
         raw: true,
       });
       product.reviews = reviews;
