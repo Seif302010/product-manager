@@ -122,7 +122,7 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://localhost:5000/product/?name=samsung&pageNumber=1&numOfElements=5&minPrice=5000&maxPrice=50000&minRating=3.0&maxRating=4.5&marketplace=noon",
+							"raw": "http://localhost:5000/product/?name=samsung&pageNumber=1&numOfElements=5&minPrice=5000&maxPrice=50000&minRating=3.0&maxRating=4.5&marketplace=noon&brand=apple",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -164,6 +164,10 @@
 								{
 									"key": "marketplace",
 									"value": "noon"
+								},
+								{
+									"key": "brand",
+									"value": "apple"
 								}
 							]
 						}
