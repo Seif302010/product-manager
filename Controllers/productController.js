@@ -22,6 +22,9 @@ const requests = {
         ProductTitle: {
           [Op.like]: `%${filters.name || ""}%`,
         },
+        ProductBrand: {
+          [Op.like]: `%${filters.brand || ""}%`,
+        },
         ProductPrice: {
           [Op.gte]: filters.minPrice || 0,
           [Op.lte]: filters.maxPrice || Number.MAX_SAFE_INTEGER,
@@ -44,7 +47,6 @@ const requests = {
         data: result.rows.map((product) => ({
           id: product.ProductID,
           name: product.ProductTitle,
-          marketplace: product.Marketplace,
           price: product.ProductPrice,
           rating: product.ProductRatings,
           image: product.ProductImage,
