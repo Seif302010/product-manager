@@ -44,6 +44,7 @@ const requests = {
         data: result.rows.map((product) => ({
           id: product.ProductID,
           name: product.ProductTitle,
+          marketplace: product.Marketplace,
           price: product.ProductPrice,
           rating: product.ProductRatings,
           image: product.ProductImage,
@@ -68,7 +69,13 @@ const requests = {
         where: { reviewedID: productId },
         raw: true,
       });
+      const sellerReviews = await Review.findAll({
+        attributes: { exclude: ["reviewedID", "id", "category"] },
+        where: { reviewedID: product.SellerName },
+        raw: true,
+      });
       product.reviews = reviews;
+      product.sellerReviews = sellerReviews;
       product.ProductSpecifications = JSON.parse(product.ProductSpecifications);
       if (product) {
         res.json(product);
