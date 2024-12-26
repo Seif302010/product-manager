@@ -37,19 +37,20 @@ const requests = {
 
       const result = await Product.findAndCountAll({
         where: conditions,
+        attributes: [
+          "ProductID",
+          "ProductTitle",
+          "ProductPrice",
+          "ProductRatings",
+          "ProductImage",
+          "MarketPlace",
+          "ProductDescription",
+        ],
         offset: start,
         limit: filters.numOfElements,
       });
       const response = {
-        data: result.rows.map((product) => ({
-          id: product.ProductID,
-          name: product.ProductTitle,
-          price: product.ProductPrice,
-          rating: product.ProductRatings,
-          image: product.ProductImage,
-          marketplace: product.marketplace,
-          description: product.ProductDescription,
-        })),
+        data: result.rows,
         rowCount: result.count,
       };
       return res.status(200).json(response);
@@ -62,8 +63,23 @@ const requests = {
       const productId = (req.query.id || "").toString();
       let product = await Product.findOne({
         where: { ProductID: productId },
-        raw: true,
+        include: [
+          {
+            model: Product,
+            as: "matchedProducts",
+            attributes: [
+              "ProductID",
+              "ProductTitle",
+              "MarketPlace",
+              "ProductPrice",
+              "SellerName",
+            ],
+            through: { attributes: [] },
+          },
+        ],
+        raw: false,
       });
+      product = product.get({ plain: true });
       if (!product)
         return res.status(404).json({ message: "Product not found" });
       const reviews = await Review.findAll({
@@ -79,6 +95,13 @@ const requests = {
       product.reviews = reviews;
       product.sellerReviews = sellerReviews;
       product.ProductSpecifications = JSON.parse(product.ProductSpecifications);
+      for (let i = 0; i < product.matchedProducts.length; i++) {
+        product.matchedProducts[i].sellerReviews = await Review.findAll({
+          attributes: { exclude: ["reviewedID", "id", "category"] },
+          where: { reviewedID: product.matchedProducts[i].SellerName },
+          raw: true,
+        });
+      }
       return res.json(product);
     } catch (error) {
       return serverError(res, error);
