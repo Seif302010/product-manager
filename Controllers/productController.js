@@ -1,12 +1,7 @@
 const { Product } = require("../Models/product");
 const { Op } = require("sequelize");
 const { Review } = require("../Models/review");
-
-const serverError = (res, error) => {
-  return res
-    .status(500)
-    .json({ message: `Internal Server Error: ${error.message}` });
-};
+const { serverError } = require("./errors");
 
 const requests = {
   get: async (req, res) => {

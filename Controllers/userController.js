@@ -1,6 +1,7 @@
 const { User } = require("../Models/user");
 const { Session } = require("../Models/session");
 const { Op } = require("sequelize");
+const { serverError } = require("./errors");
 const dbFunctions = require("../GlobalFunctions/modelsFunctions");
 const objFunctions = require("../GlobalFunctions/objectsFunctions");
 const bcrypt = require("bcrypt");
@@ -46,9 +47,7 @@ const requests = {
       user.token = session.token;
       return res.status(201).json(user);
     } catch (error) {
-      return res
-        .status(500)
-        .json({ message: `Internal Server Error: ${error.message}` });
+      return serverError(res, error);
     }
   },
 
@@ -59,7 +58,7 @@ const requests = {
       });
 
       if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
-        return res.status(404).json("Incorrect Email or Password");
+        return res.status(404).json({ message: "Incorrect Email or Password" });
       }
 
       const session = await dbFunctions(Session).create({
@@ -71,7 +70,7 @@ const requests = {
       user.token = session.token;
       return res.status(200).json(user);
     } catch (error) {
-      return res.status(500).json({ message: error.message });
+      return serverError(res, error);
     }
   },
   logOut: async (req, res) => {
@@ -83,7 +82,7 @@ const requests = {
       });
       return res.status(200).json({ message: "Logged out!" });
     } catch (error) {
-      return res.status(500).json({ message: error.message });
+      return serverError(res, error);
     }
   },
 };
