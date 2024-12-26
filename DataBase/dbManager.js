@@ -3,6 +3,7 @@ const { sequelize } = require("./sequelize");
 const { User } = require("../Models/user");
 const { Session } = require("../Models/session");
 const { Product } = require("../Models/product");
+const { ProductMatches } = require("../Models/productMatches");
 const { Review } = require("../Models/review");
 
 const asyncTables = async () => {

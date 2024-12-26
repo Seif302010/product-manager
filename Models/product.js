@@ -67,4 +67,11 @@ const Product = sequelize.define(
   }
 );
 
+Product.belongsToMany(Product, {
+  through: "ProductMatches",
+  as: "matchedProducts",
+  foreignKey: "productId",
+  otherKey: "matchedProductId",
+});
+
 module.exports = { Product };

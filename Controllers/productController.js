@@ -45,6 +45,7 @@ const requests = {
           price: product.ProductPrice,
           rating: product.ProductRatings,
           image: product.ProductImage,
+          marketplace: product.marketplace,
           description: product.ProductDescription,
         })),
         rowCount: result.count,
@@ -61,6 +62,8 @@ const requests = {
         where: { ProductID: productId },
         raw: true,
       });
+      if (!product)
+        return res.status(404).json({ message: "Product not found" });
       const reviews = await Review.findAll({
         attributes: { exclude: ["reviewedID", "id"] },
         where: { reviewedID: productId },
@@ -74,11 +77,7 @@ const requests = {
       product.reviews = reviews;
       product.sellerReviews = sellerReviews;
       product.ProductSpecifications = JSON.parse(product.ProductSpecifications);
-      if (product) {
-        res.json(product);
-      } else {
-        res.status(404).json({ message: "Product not found" });
-      }
+      return res.json(product);
     } catch (error) {
       return serverError(res, error);
     }
