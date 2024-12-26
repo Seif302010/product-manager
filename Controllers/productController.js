@@ -56,8 +56,8 @@ const requests = {
     }
   },
   getById: async (req, res) => {
-    const productId = req.query.id.toString();
     try {
+      const productId = (req.query.id || "").toString();
       let product = await Product.findOne({
         where: { ProductID: productId },
         raw: true,
