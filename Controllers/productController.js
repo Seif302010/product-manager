@@ -45,6 +45,7 @@ const requests = {
           price: product.ProductPrice,
           rating: product.ProductRatings,
           image: product.ProductImage,
+          marketplace: product.marketplace,
           description: product.ProductDescription,
         })),
         rowCount: result.count,
