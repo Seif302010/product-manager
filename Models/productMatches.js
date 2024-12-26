@@ -5,7 +5,7 @@ const { DataTypes } = require("sequelize");
 const { Product } = require("./product");
 
 const ProductMatches = sequelize.define(
-  "ProductMatches",
+  "productMatches",
   {
     productId: {
       type: DataTypes.STRING,

@@ -1,6 +1,8 @@
-const { Product } = require("../Models/product");
 const { Op } = require("sequelize");
+const { Product } = require("../Models/product");
+const { ProductMatches } = require("../Models/productMatches");
 const { Review } = require("../Models/review");
+
 const { serverError } = require("./errors");
 
 const requests = {
