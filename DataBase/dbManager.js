@@ -35,14 +35,12 @@ const insertProducts = async () => {
     if ((await ProductMatches.count()) === 0) {
       const productMatches = [];
       allData.forEach((item) => {
-        if (item.MatchedProducts && item.MatchedProducts.length > 0) {
-          item.MatchedProducts.forEach((matchedProductId) => {
-            productMatches.push({
-              productId: item.ProductID,
-              matchedProductId,
-            });
+        item.MatchedProducts.forEach((matchedProductId) => {
+          productMatches.push({
+            productId: item.ProductID,
+            matchedProductId,
           });
-        }
+        });
       });
       if (productMatches.length > 0) {
         await ProductMatches.bulkCreate(productMatches, {

@@ -95,14 +95,16 @@ const requests = {
       product.reviews = reviews;
       product.sellerReviews = sellerReviews;
       product.ProductSpecifications = JSON.parse(product.ProductSpecifications);
-      product.matchedProducts = product.matchedProducts.map(async (match) => ({
-        ...match,
-        sellerReviews: await Review.findAll({
-          attributes: { exclude: ["reviewedID", "id", "category"] },
-          where: { reviewedID: match.SellerName },
-          raw: true,
-        }),
-      }));
+      product.matchedProducts = await Promise.all(
+        product.matchedProducts.map(async (match) => ({
+          ...match,
+          sellerReviews: await Review.findAll({
+            attributes: { exclude: ["reviewedID", "id", "category"] },
+            where: { reviewedID: match.SellerName },
+            raw: true,
+          }),
+        }))
+      );
       return res.json(product);
     } catch (error) {
       return serverError(res, error);
