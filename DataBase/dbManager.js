@@ -70,7 +70,6 @@ const insertReviews = async () => {
           logging: false,
         });
       }
-      console.log(productReviews.length);
       console.log("product reviews inserted");
       await Review.bulkCreate(sellerReviews, {
         validate: true,
