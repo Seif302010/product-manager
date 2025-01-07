@@ -58,7 +58,10 @@ const insertProducts = async () => {
 const insertReviews = async () => {
   try {
     if ((await Review.count()) === 0) {
-      const productReviews = require("../Data/products_reviews.json");
+      const productReviews = [
+        ...require("../Data/products_reviews.json"),
+        ...require("../Data/generated_reviews.json"),
+      ];
       const sellerReviews = require("../Data/Seller_Reviews.json");
       const chunkSize = 10000;
       for (let i = 0; i < productReviews.length; i += chunkSize) {
@@ -67,6 +70,7 @@ const insertReviews = async () => {
           logging: false,
         });
       }
+      console.log(productReviews.length);
       console.log("product reviews inserted");
       await Review.bulkCreate(sellerReviews, {
         validate: true,

@@ -35,10 +35,6 @@ const Product = sequelize.define(
       type: DataTypes.FLOAT,
       defaultValue: 0.0,
     },
-    ProductRatingCount: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-    },
     ProductRatings: {
       type: DataTypes.FLOAT,
       defaultValue: 0.0,
