@@ -70,8 +70,11 @@ const requests = {
             attributes: [
               "ProductID",
               "ProductTitle",
-              "MarketPlace",
               "ProductPrice",
+              "ProductRatings",
+              "ProductImage",
+              "MarketPlace",
+              "ProductDescription",
               "SellerName",
             ],
             through: { attributes: [] },
@@ -79,32 +82,44 @@ const requests = {
         ],
         raw: false,
       });
-      product = product.get({ plain: true });
       if (!product)
         return res.status(404).json({ message: "Product not found" });
-      const reviews = await Review.findAll({
-        attributes: { exclude: ["reviewedID", "id"] },
-        where: { reviewedID: productId },
+      product = product.get({ plain: true });
+
+      let allReviews = await Review.findAll({
+        attributes: { exclude: ["id"] },
+        where: {
+          [Op.or]: [
+            { reviewedID: productId },
+            { reviewedID: product.SellerName },
+            {
+              reviewedID: {
+                [Op.in]: product.matchedProducts.map((item) => item.ProductID),
+              },
+            },
+          ],
+        },
         raw: true,
       });
-      const sellerReviews = await Review.findAll({
-        attributes: { exclude: ["reviewedID", "id", "category"] },
-        where: { reviewedID: product.SellerName },
-        raw: true,
-      });
-      product.reviews = reviews;
-      product.sellerReviews = sellerReviews;
+      allReviews = allReviews.reduce((acc, review) => {
+        const { reviewedID, ...rest } = review;
+        if (!acc[reviewedID]) acc[reviewedID] = [];
+        acc[reviewedID].push(rest);
+        return acc;
+      }, {});
+      product.reviews = allReviews[productId] || [];
+      delete allReviews[productId];
+      for (const reviewedID in allReviews) {
+        allReviews[reviewedID] = allReviews[reviewedID].map(
+          ({ category, ...rest }) => rest
+        );
+      }
+      product.sellerReviews = allReviews[product.SellerName] || [];
       product.ProductSpecifications = JSON.parse(product.ProductSpecifications);
-      product.matchedProducts = await Promise.all(
-        product.matchedProducts.map(async (match) => ({
-          ...match,
-          sellerReviews: await Review.findAll({
-            attributes: { exclude: ["reviewedID", "id", "category"] },
-            where: { reviewedID: match.SellerName },
-            raw: true,
-          }),
-        }))
-      );
+      product.matchedProducts = product.matchedProducts.map((match) => ({
+        ...match,
+        sellerReviews: allReviews[match.SellerName] || [],
+      }));
       return res.json(product);
     } catch (error) {
       return serverError(res, error);
