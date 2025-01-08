@@ -1,7 +1,8 @@
 const { Op } = require("sequelize");
 const { Product } = require("../Models/product");
 const { ProductMatches } = require("../Models/productMatches");
-const { Review } = require("../Models/review");
+const { ProductReview } = require("../Models/productReview");
+const { SellerReview } = require("../Models/sellerReview");
 
 const { serverError } = require("./errors");
 
@@ -79,6 +80,11 @@ const requests = {
             ],
             through: { attributes: [] },
           },
+          {
+            model: ProductReview,
+            as: "reviews",
+            attributes: { exclude: ["id"] },
+          },
         ],
         raw: false,
       });
@@ -86,11 +92,10 @@ const requests = {
         return res.status(404).json({ message: "Product not found" });
       product = product.get({ plain: true });
 
-      let allReviews = await Review.findAll({
+      let allReviews = await SellerReview.findAll({
         attributes: { exclude: ["id"] },
         where: {
           [Op.or]: [
-            { reviewedID: productId },
             { reviewedID: product.SellerName },
             {
               reviewedID: {
@@ -107,13 +112,6 @@ const requests = {
         acc[reviewedID].push(rest);
         return acc;
       }, {});
-      product.reviews = allReviews[productId] || [];
-      delete allReviews[productId];
-      for (const reviewedID in allReviews) {
-        allReviews[reviewedID] = allReviews[reviewedID].map(
-          ({ category, ...rest }) => rest
-        );
-      }
       product.sellerReviews = allReviews[product.SellerName] || [];
       product.ProductSpecifications = JSON.parse(product.ProductSpecifications);
       product.matchedProducts = product.matchedProducts.map((match) => ({

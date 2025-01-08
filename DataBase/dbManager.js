@@ -4,7 +4,8 @@ const { User } = require("../Models/user");
 const { Session } = require("../Models/session");
 const { Product } = require("../Models/product");
 const { ProductMatches } = require("../Models/productMatches");
-const { Review } = require("../Models/review");
+const { ProductReview } = require("../Models/productReview");
+const { SellerReview } = require("../Models/sellerReview");
 
 const asyncTables = async () => {
   try {
@@ -57,21 +58,23 @@ const insertProducts = async () => {
 
 const insertReviews = async () => {
   try {
-    if ((await Review.count()) === 0) {
+    if ((await ProductReview.count()) === 0) {
       const productReviews = [
         ...require("../Data/products_reviews.json"),
         ...require("../Data/generated_reviews.json"),
       ];
-      const sellerReviews = require("../Data/Seller_Reviews.json");
       const chunkSize = 10000;
       for (let i = 0; i < productReviews.length; i += chunkSize) {
-        await Review.bulkCreate(productReviews.slice(i, i + chunkSize), {
+        await ProductReview.bulkCreate(productReviews.slice(i, i + chunkSize), {
           validate: true,
           logging: false,
         });
       }
       console.log("product reviews inserted");
-      await Review.bulkCreate(sellerReviews, {
+    }
+    if ((await SellerReview.count()) === 0) {
+      const sellerReviews = require("../Data/Seller_Reviews.json");
+      await SellerReview.bulkCreate(sellerReviews, {
         validate: true,
         logging: false,
       });
