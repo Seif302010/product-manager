@@ -1,4 +1,4 @@
-const { Op } = require("sequelize");
+const { Sequelize, Op } = require("sequelize");
 const { Product } = require("../Models/product");
 const { ProductMatches } = require("../Models/productMatches");
 const { ProductReview } = require("../Models/productReview");
@@ -46,7 +46,22 @@ const requests = {
           "ProductImage",
           "MarketPlace",
           "ProductDescription",
+          [
+            Sequelize.literal(
+              "(SELECT COUNT(*) FROM ProductMatches WHERE ProductMatches.productId = product.ProductID)"
+            ),
+            "matchCount",
+          ],
         ],
+
+        include: [
+          {
+            model: Product,
+            as: "matchedProducts",
+            attributes: [],
+          },
+        ],
+        order: [[Sequelize.literal("matchCount"), "DESC"]],
         offset: start,
         limit: filters.numOfElements,
       });
@@ -56,6 +71,7 @@ const requests = {
       };
       return res.status(200).json(response);
     } catch (error) {
+      console.log(error);
       return serverError(res, error);
     }
   },
