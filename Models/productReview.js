@@ -1,8 +1,11 @@
 const { sequelize } = require("../DataBase/sequelize");
 
 const { DataTypes } = require("sequelize");
-const Review = sequelize.define(
-  "review",
+
+const { Product } = require("./product");
+
+const ProductReview = sequelize.define(
+  "productReview",
   {
     review: {
       type: DataTypes.TEXT("long"),
@@ -21,12 +24,17 @@ const Review = sequelize.define(
     reviewedID: {
       type: DataTypes.STRING,
       allowNull: true,
+      references: {
+        model: Product,
+        key: "ProductID",
+      },
     },
   },
   {
     timestamps: false,
     createdAt: false,
     updatedAt: false,
+    id: false,
   }
 );
-module.exports = { Review };
+module.exports = { ProductReview };
