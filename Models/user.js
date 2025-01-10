@@ -1,5 +1,4 @@
 const { sequelize } = require("../DataBase/sequelize");
-
 const { DataTypes } = require("sequelize");
 
 const User = sequelize.define("user", {
@@ -47,6 +46,15 @@ const User = sequelize.define("user", {
         msg: "Password must be between 8 and 60 characters long.",
       },
     },
+  },
+  passwordResetCode: {
+    type: DataTypes.STRING,
+  },
+  passwordResetExpired: {
+    type: DataTypes.DATE,
+  },
+  passwordResetVerified: {
+    type: DataTypes.BOOLEAN,
   },
   role: {
     type: DataTypes.STRING,
