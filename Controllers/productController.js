@@ -1,4 +1,4 @@
-const { Sequelize, Op } = require("sequelize");
+const { Sequelize, fn, literal, Op } = require("sequelize");
 const { Product } = require("../Models/product");
 const { ProductMatches } = require("../Models/productMatches");
 const { ProductReview } = require("../Models/productReview");
@@ -15,7 +15,6 @@ const requests = {
         filters.numOfElements > 0 ? filters.numOfElements : 5
       );
       const start = (filters.pageNumber - 1) * filters.numOfElements;
-
       const conditions = {
         ProductTitle: {
           [Op.like]: `%${filters.name || ""}%`,
@@ -46,22 +45,15 @@ const requests = {
           "ProductImage",
           "MarketPlace",
           "ProductDescription",
+        ],
+        order: [
           [
             Sequelize.literal(
               "(SELECT COUNT(*) FROM ProductMatches WHERE ProductMatches.productId = product.ProductID)"
             ),
-            "matchCount",
+            "DESC",
           ],
         ],
-
-        include: [
-          {
-            model: Product,
-            as: "matchedProducts",
-            attributes: [],
-          },
-        ],
-        order: [[Sequelize.literal("matchCount"), "DESC"]],
         offset: start,
         limit: filters.numOfElements,
       });
@@ -106,33 +98,50 @@ const requests = {
       if (!product)
         return res.status(404).json({ message: "Product not found" });
       product = product.get({ plain: true });
-
       let allReviews = await SellerReview.findAll({
-        attributes: { exclude: ["id"] },
+        attributes: [
+          "reviewedID",
+          [fn("COUNT", "*"), "Count"],
+          [
+            fn(
+              "SUM",
+              literal(`CASE WHEN sentiment = 'positive' THEN 1 ELSE 0 END`)
+            ),
+            "Positive",
+          ],
+        ],
         where: {
           [Op.or]: [
             { reviewedID: product.SellerName },
             {
               reviewedID: {
-                [Op.in]: product.matchedProducts.map((item) => item.ProductID),
+                [Op.in]: product.matchedProducts.map((item) => item.SellerName),
               },
             },
           ],
         },
+        group: ["reviewedID"],
         raw: true,
       });
-      allReviews = allReviews.reduce((acc, review) => {
-        const { reviewedID, ...rest } = review;
-        if (!acc[reviewedID]) acc[reviewedID] = [];
-        acc[reviewedID].push(rest);
+      const defaultObj = {
+        Positive: 0,
+        Negative: 0,
+        Count: 0,
+      };
+      allReviews = allReviews.reduce((acc, { reviewedID, ...rest }) => {
+        if (rest.Count > 0) {
+          rest.Positive = (rest.Positive / rest.Count) * 100;
+          rest.Negative = 100 - rest.Positive;
+        }
+        acc[reviewedID] = rest;
         return acc;
       }, {});
-      product.sellerReviews = allReviews[product.SellerName] || [];
-      product.ProductSpecifications = JSON.parse(product.ProductSpecifications);
+      product.sellerAnalysis = allReviews[product.SellerName] || defaultObj;
       product.matchedProducts = product.matchedProducts.map((match) => ({
         ...match,
-        sellerReviews: allReviews[match.SellerName] || [],
+        sellerAnalysis: allReviews[match.SellerName] || defaultObj,
       }));
+      product.ProductSpecifications = JSON.parse(product.ProductSpecifications);
       return res.json(product);
     } catch (error) {
       return serverError(res, error);
