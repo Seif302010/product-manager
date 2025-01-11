@@ -15,7 +15,6 @@ const requests = {
         filters.numOfElements > 0 ? filters.numOfElements : 5
       );
       const start = (filters.pageNumber - 1) * filters.numOfElements;
-
       const conditions = {
         ProductTitle: {
           [Op.like]: `%${filters.name || ""}%`,
@@ -46,22 +45,15 @@ const requests = {
           "ProductImage",
           "MarketPlace",
           "ProductDescription",
+        ],
+        order: [
           [
             Sequelize.literal(
               "(SELECT COUNT(*) FROM ProductMatches WHERE ProductMatches.productId = product.ProductID)"
             ),
-            "matchCount",
+            "DESC",
           ],
         ],
-
-        include: [
-          {
-            model: Product,
-            as: "matchedProducts",
-            attributes: [],
-          },
-        ],
-        order: [[Sequelize.literal("matchCount"), "DESC"]],
         offset: start,
         limit: filters.numOfElements,
       });
