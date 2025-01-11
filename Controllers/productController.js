@@ -137,11 +137,11 @@ const requests = {
         return acc;
       }, {});
       product.sellerAnalysis = allReviews[product.SellerName] || defaultObj;
-      product.ProductSpecifications = JSON.parse(product.ProductSpecifications);
       product.matchedProducts = product.matchedProducts.map((match) => ({
         ...match,
         sellerAnalysis: allReviews[match.SellerName] || defaultObj,
       }));
+      product.ProductSpecifications = JSON.parse(product.ProductSpecifications);
       return res.json(product);
     } catch (error) {
       return serverError(res, error);
