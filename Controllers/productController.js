@@ -46,14 +46,6 @@ const requests = {
           "MarketPlace",
           "ProductDescription",
         ],
-        order: [
-          [
-            Sequelize.literal(
-              "(SELECT COUNT(*) FROM ProductMatches WHERE ProductMatches.productId = product.ProductID)"
-            ),
-            "DESC",
-          ],
-        ],
         offset: start,
         limit: filters.numOfElements,
       });
