@@ -54,7 +54,6 @@ const requests = {
       return serverError(res, error);
     }
   },
-
   logIn: async (req, res) => {
     try {
       let user = await User.findOne({
