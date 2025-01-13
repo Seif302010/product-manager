@@ -6,7 +6,6 @@ const { SellerReview } = require("../Models/sellerReview");
 const { WishList } = require("../Models/wishList");
 
 const { serverError } = require("./errors");
-const { sequelize } = require("../DataBase/sequelize");
 
 const requests = {
   get: async (req, res) => {
@@ -71,6 +70,16 @@ const requests = {
       const productId = (req.query.id || "").toString();
       let product = await Product.findOne({
         where: { ProductID: productId },
+        attributes: {
+          include: [
+            [
+              Sequelize.literal(
+                `(SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END FROM wishList WHERE productId = product.ProductID AND userId = ${req.user.id})`
+              ),
+              "inWishList",
+            ],
+          ],
+        },
         include: [
           {
             model: Product,
@@ -86,7 +95,7 @@ const requests = {
               "SellerName",
               [
                 Sequelize.literal(
-                  `(SELECT COUNT(*) FROM wishList WHERE productId = product.ProductID AND userId = ${req.user.id})`
+                  `(SELECT COUNT(*) FROM wishList WHERE productId = matchedProducts.ProductID AND userId = ${req.user.id})`
                 ),
                 "inWishList",
               ],
