@@ -37,9 +37,9 @@ router.delete(
   userController.deleteFromWishList
 );
 router.get(
-  "/showWhitchList",
+  "/showWishList",
   authService.allowedTo("user"),
-  userController.showWhitchList
+  userController.showWishList
 );
 router.delete(
   "/deleteUser",

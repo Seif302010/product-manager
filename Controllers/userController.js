@@ -96,11 +96,9 @@ const requests = {
 
     if (!user) {
       return next(
-        res
-          .status(404)
-          .json({
-            message: `There is no user with that email: ${req.body.email}`,
-          })
+        res.status(404).json({
+          message: `There is no user with that email: ${req.body.email}`,
+        })
       );
     }
     const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
@@ -255,83 +253,64 @@ const requests = {
       res.status(500).json({ message: error.message });
     }
   },
-  addToWishList: async (req, res, next) => {
+  addToWishList: async (req, res) => {
     const { productId } = req.body;
     const userId = req.user.id;
+    try {
+      const product = await Product.findByPk(productId);
+      if (!product) {
+        return res.status(404).json({
+          message: "Product not found.",
+        });
+      }
 
-    const user = await User.findByPk(userId);
-    if (!user) {
-      return res.status(404).json({
-        status: "fail",
-        message: "User not found.",
+      const existingWishListItem = await WishList.findOne({
+        where: { userId, productId },
       });
-    }
 
-    const product = await Product.findByPk(productId);
-    if (!product) {
-      return res.status(404).json({
-        status: "fail",
-        message: "Product not found.",
+      if (existingWishListItem) {
+        return res.status(400).json({
+          message: "Product already exists in your wishlist.",
+        });
+      }
+      await WishList.create({ userId, productId });
+      return res.status(200).json({
+        message: "Product added successfully to your wishlist.",
       });
+    } catch (error) {
+      return serverError(res, error);
     }
-
-    const existingWishListItem = await WishList.findOne({
-      where: { userId, productId },
-    });
-
-    if (existingWishListItem) {
-      return res.status(400).json({
-        status: "fail",
-        message: "Product already exists in your wishlist.",
-      });
-    }
-
-    await WishList.create({ userId, productId });
-
-    res.status(200).json({
-      status: "success",
-      message: "Product added successfully to your wishlist.",
-    });
   },
-  deleteFromWishList: async (req, res, next) => {
+  deleteFromWishList: async (req, res) => {
     const { productId } = req.body;
     const userId = req.user.id;
-
-    const user = await User.findByPk(userId);
-    if (!user) {
-      return res.status(404).json({
-        status: "fail",
-        message: "User not found.",
+    try {
+      const product = await Product.findByPk(productId);
+      if (!product) {
+        return res.status(404).json({
+          message: "Product not found.",
+        });
+      }
+      const wishListItem = await WishList.findOne({
+        where: { userId, productId },
       });
-    }
 
-    const product = await Product.findByPk(productId);
-    if (!product) {
-      return res.status(404).json({
-        status: "fail",
-        message: "Product not found.",
+      if (!wishListItem) {
+        return res.status(404).json({
+          message: "Product not found in your wishlist.",
+        });
+      }
+
+      await wishListItem.destroy();
+
+      return res.status(200).json({
+        message: "Product removed successfully from your wishlist.",
       });
+    } catch (error) {
+      return serverError(res, error);
     }
-
-    const wishListItem = await WishList.findOne({
-      where: { userId, productId },
-    });
-
-    if (!wishListItem) {
-      return res.status(404).json({
-        status: "fail",
-        message: "Product not found in your wishlist.",
-      });
-    }
-
-    await wishListItem.destroy();
-
-    res.status(200).json({
-      status: "success",
-      message: "Product removed successfully from your wishlist.",
-    });
   },
-  showWhitchList: async (req, res, next) => {
+  showWishList: async (req, res) => {
     try {
       const userId = req.user.id;
 
@@ -346,13 +325,19 @@ const requests = {
             [Op.in]: productIds,
           },
         },
+        attributes: [
+          "ProductID",
+          "ProductTitle",
+          "ProductPrice",
+          "ProductRatings",
+          "ProductImage",
+          "MarketPlace",
+          "ProductDescription",
+        ],
       });
-      res.status(200).json({
-        status: "success",
-        data: products,
-      });
+      return res.status(200).json(products);
     } catch (error) {
-      next(error);
+      return serverError(res, error);
     }
   },
 };

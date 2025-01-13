@@ -491,7 +491,7 @@
 			"name": "Wish List",
 			"item": [
 				{
-					"name": "ShowMyWhishList",
+					"name": "showWishList",
 					"event": [
 						{
 							"listen": "test",
@@ -510,12 +510,12 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTczNjMzOTQ5NSwiZXhwIjoxNzM2NDI1ODk1fQ.lJj7DhN-4NY6d4bb5edDgSTRljW2DDoJtm-DbOs7T2g",
+								"key": "authorization",
+								"value": "",
 								"type": "text"
 							}
 						],
-						"url": "http://localhost:3000/user/showWhitchList",
+						"url": "http://localhost:5000/user/showWishList/",
 						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
 					},
 					"response": []
@@ -532,23 +532,31 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"header": [
+							{
+								"key": "authorization",
+								"value": "",
+								"type": "text"
 							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "productId",
+									"value": "AC008CL00QICSNAFAMZ",
+									"type": "text"
+								}
+							]
 						},
-						"url": "{{base_url}}/info",
+						"url": "http://localhost:5000/user//addToWishList/",
 						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
 					},
 					"response": []
@@ -565,37 +573,31 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"header": [
+							{
+								"key": "authorization",
+								"value": "",
+								"type": "text"
 							}
-						},
-						"url": {
-							"raw": "{{base_url}}/info?id=1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"info"
-							],
-							"query": [
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
 								{
-									"key": "id",
-									"value": "1"
+									"key": "productId",
+									"value": "AC008CL00QICSNAFAMZ",
+									"type": "text"
 								}
 							]
 						},
+						"url": "http://localhost:5000/user/deleteFromWishList/",
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
 					},
 					"response": []
