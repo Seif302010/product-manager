@@ -3,8 +3,10 @@ const { Product } = require("../Models/product");
 const { ProductMatches } = require("../Models/productMatches");
 const { ProductReview } = require("../Models/productReview");
 const { SellerReview } = require("../Models/sellerReview");
+const { WishList } = require("../Models/wishList");
 
 const { serverError } = require("./errors");
+const { sequelize } = require("../DataBase/sequelize");
 
 const requests = {
   get: async (req, res) => {
@@ -45,6 +47,12 @@ const requests = {
           "ProductImage",
           "MarketPlace",
           "ProductDescription",
+          [
+            Sequelize.literal(
+              `(SELECT COUNT(*) FROM wishList WHERE productId = product.ProductID AND userId = ${req.user.id})`
+            ),
+            "inWishList",
+          ],
         ],
         offset: start,
         limit: filters.numOfElements,
@@ -76,6 +84,12 @@ const requests = {
               "MarketPlace",
               "ProductDescription",
               "SellerName",
+              [
+                Sequelize.literal(
+                  `(SELECT COUNT(*) FROM wishList WHERE productId = product.ProductID AND userId = ${req.user.id})`
+                ),
+                "inWishList",
+              ],
             ],
             through: { attributes: [] },
           },
